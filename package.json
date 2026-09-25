@@ -1,0 +1,1 @@
+{"name":"suikoden-star-leap-no-gacha","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs"}}
