@@ -9,7 +9,7 @@ let state;
 try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createState(); }
 let teamIndex=0,selection={unitId:null,slot:null};
 const elements=[...new Set(characters.map(c=>c.element))];
-const candidateFilters={search:'',role:'all',element:elements[0]};
+const candidateFilters={search:'',role:'all',element:'all'};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
 const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy" draggable="false"${style} onerror="this.remove()"></span>`;};
@@ -19,17 +19,21 @@ function renderTeams() {
   $('#team-tabs').innerHTML=state.teams.map((t,i)=>`<button class="${i===teamIndex?'active':''}" data-team="${i}">${esc(t.name||`編成 ${i+1}`)}</button>`).join('');
   const t=state.teams[teamIndex];
   const slot=(key,label)=>{const c=characterById.get(t[key]);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
-  $('#team-editor').innerHTML=`<div class="team-editor"><div class="team-fields"><label>編成名<input id="team-name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input id="team-tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" id="delete-team" ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea id="team-note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,i)=>slot(s,`後列 ${i+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,i)=>slot(s,`前列 ${i+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div>`;
+  $('#team-editor').innerHTML=`<div class="team-editor"><div class="team-fields"><label>編成名<input id="team-name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input id="team-tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" id="delete-team" ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea id="team-note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,i)=>slot(s,`前列 ${i+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,i)=>slot(s,`後列 ${i+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div>`;
   renderCandidates();
   $('#candidate-list').scrollTop=candidateScroll;
   $('#candidate-list').scrollLeft=candidateX;
 }
 function renderCandidates() {
   const list=characters.filter(c=>(candidateFilters.element==='all'||c.element===candidateFilters.element)&&c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
-  $('#candidate-title').textContent=candidateFilters.element==='all'?'仲間一覧':`${candidateFilters.element}属性の仲間`;
+  $('#candidate-title').textContent='仲間一覧';
   $('#candidate-elements').innerHTML=[['all','全員'],...elements.map(e=>[e,e])].map(([value,label])=>`<button type="button" data-element="${value}" aria-pressed="${candidateFilters.element===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>c.element===value).length}</span></button>`).join('');
   $('#candidate-count').textContent=`${list.length}人`;
-  $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
+  const card=c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" data-role="${c.role}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;
+  $('#candidate-list').innerHTML=elements.map(element=>{
+    const members=list.filter(c=>c.element===element);
+    return members.length?`<section class="candidate-group" data-element="${element}" aria-label="${element}属性"><div class="candidate-group-head"><strong>${element}属性</strong><small>${members.length}人</small></div>${members.map(card).join('')}</section>`:'';
+  }).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
 }
 function render(){renderTeams();}
 let suppressClick=false;

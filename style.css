@@ -179,3 +179,25 @@ footer{padding:20px 28px}
 .candidate-elements button[aria-pressed="true"]{background:#594a32;border-color:#d6ad6b;color:#ffe4ad}
 .candidate-elements button span{font-size:11px;color:#bfc0bd;margin-left:5px}
 .candidate-elements button[aria-pressed="true"] span{color:#f1d5a0}
+
+/* Tag sections, as in the Reverse planner, make the full catalog scannable. */
+.planner-only .candidate-list{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
+.candidate-group{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;align-content:start;--element-color:#e1c38d}
+.candidate-group-head{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:5px 9px;background:#30343a;border-left:3px solid var(--element-color);border-radius:2px;color:var(--element-color)}
+.candidate-group-head strong{font-size:14px}
+.candidate-group-head small{font-size:11px;color:#d3d0c9}
+.candidate-group[data-element="風"],.candidate-elements button[data-element="風"]{--element-color:#91d9ba}
+.candidate-group[data-element="水"],.candidate-elements button[data-element="水"]{--element-color:#97c9f0}
+.candidate-group[data-element="雷"],.candidate-elements button[data-element="雷"]{--element-color:#d7b2f6}
+.candidate-group[data-element="火"],.candidate-elements button[data-element="火"]{--element-color:#f0b291}
+.candidate-group[data-element="土"],.candidate-elements button[data-element="土"]{--element-color:#e3c68c}
+.candidate-elements button[aria-pressed="true"]{border-color:var(--element-color,#d6ad6b);color:var(--element-color,#ffe4ad);background:#3a3c39}
+.candidate-role{justify-self:center;border-radius:10px;background:#45535a;color:#edf0ed!important;padding:1px 6px}
+.candidate[data-role="攻手"] .candidate-role{background:#684945}
+.candidate[data-role="回復"] .candidate-role{background:#3a6154}
+.candidate[data-role="守護"] .candidate-role{background:#415677}
+.candidate[data-role="補助"] .candidate-role{background:#5b5171}
+@media(max-width:1600px){.candidate-group{grid-template-columns:repeat(8,minmax(0,1fr))}}
+@media(max-width:1100px){.candidate-group{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(max-width:800px){.planner-only .candidate-list{display:grid;grid-template-columns:1fr;max-height:none;overflow:visible}.candidate-group{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:520px){.candidate-group{grid-template-columns:repeat(3,minmax(0,1fr))}}
