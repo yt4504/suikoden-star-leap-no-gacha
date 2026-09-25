@@ -54,10 +54,10 @@
     "matchError": 0.0043
   },
   "gonoh": {
-    "x": 203,
-    "y": 552,
-    "width": 895,
-    "matchError": 0.0007
+    "x": 860,
+    "y": 291,
+    "width": 411,
+    "matchError": 0.01486
   },
   "haruka": {
     "x": 767,
