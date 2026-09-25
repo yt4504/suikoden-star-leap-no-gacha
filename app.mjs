@@ -1,17 +1,14 @@
 import {characters,characterById,displayName} from './characters.mjs?v=hisui-13';
 import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState} from './model.mjs';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
-import {storyStages,storyStageValid,joinsLater} from './availability.mjs';
+import {joinsInFutureUpdate} from './availability.mjs?v=current-16';
 
 const STORAGE='star-leap-no-gacha-v1';
-const PROGRESS_STORAGE='star-leap-story-progress-v1';
 const $=selector=>document.querySelector(selector);
 const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 let state;
 try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createState(); }
 let teamIndex=0,selection={unitId:null,slot:null};
-let storyProgress=localStorage.getItem(PROGRESS_STORAGE);
-if(!storyStageValid(storyProgress)) storyProgress='before_tenryu';
 const elements=[...new Set(characters.map(c=>c.element))];
 const roleOrder=['攻手','守護','回復','補助'];
 const candidateFilters={search:'',role:'all',element:'all'};
@@ -23,7 +20,7 @@ function renderTeams() {
   if(teamIndex>=state.teams.length) teamIndex=state.teams.length-1;
   $('#team-tabs').innerHTML=state.teams.map((t,i)=>`<button class="${i===teamIndex?'active':''}" data-team="${i}">${esc(t.name||`編成 ${i+1}`)}</button>`).join('');
   const t=state.teams[teamIndex];
-  const slot=(key,label)=>{const c=characterById.get(t[key]),future=c&&joinsLater(c.id,storyProgress);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${future?' future':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}" data-role="${c.role}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}${future?'（現在は加入不可）':''}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
+  const slot=(key,label)=>{const c=characterById.get(t[key]),future=c&&joinsInFutureUpdate(c.id);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${future?' future':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}" data-role="${c.role}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}${future?'（今回の更新では加入不可）':''}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
   $('#team-editor').innerHTML=`<div class="team-editor"><div class="team-fields"><label>編成名<input id="team-name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input id="team-tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" id="delete-team" ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea id="team-note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,i)=>slot(s,`前列 ${i+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,i)=>slot(s,`後列 ${i+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div>`;
   renderCandidates();
   $('#candidate-list').scrollTop=candidateScroll;
@@ -34,7 +31,7 @@ function renderCandidates() {
   $('#candidate-title').textContent='仲間一覧';
   $('#candidate-elements').innerHTML=[['all','全員'],...elements.map(e=>[e,e])].map(([value,label])=>`<button type="button" data-element="${value}" aria-pressed="${candidateFilters.element===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>c.element===value).length}</span></button>`).join('');
   $('#candidate-count').textContent=`${list.length}人`;
-  const card=c=>{const future=joinsLater(c.id,storyProgress);return `<button class="candidate${future?' future':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" data-role="${c.role}" aria-label="${esc(c.name)}${future?'（現在は加入不可）':''}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;};
+  const card=c=>{const future=joinsInFutureUpdate(c.id);return `<button class="candidate${future?' future':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" data-role="${c.role}" aria-label="${esc(c.name)}${future?'（今回の更新では加入不可）':''}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;};
   $('#candidate-list').innerHTML=elements.map(element=>{
     const members=list.filter(c=>c.element===element).sort((a,b)=>roleOrder.indexOf(a.role)-roleOrder.indexOf(b.role));
     return members.length?`<section class="candidate-group" data-element="${element}" aria-label="${element}属性"><div class="candidate-group-head"><strong>${element}属性</strong><small>${members.length}人</small></div>${members.map(card).join('')}</section>`:'';
@@ -59,13 +56,10 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;if(candidateFilters.search)candidateFilters.element='all';renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
 document.addEventListener('change',e=>{
-  if(e.target.id==='story-progress'){storyProgress=e.target.value;localStorage.setItem(PROGRESS_STORAGE,storyProgress);renderTeams();return;}
   if(['team-name','team-tag','team-note'].includes(e.target.id)){const k={'team-name':'name','team-tag':'tag','team-note':'note'}[e.target.id];persist(updateTeam(state,teamIndex,{[k]:e.target.value}));}
 });
 $('#file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const incoming=importState(await file.text());persist(incoming);teamIndex=0;selection={unitId:null,slot:null};flash('JSONを読み込みました');}catch(err){flash(`読み込み失敗：${err.message}`,true);}finally{e.target.value='';}});
 for(const role of [...new Set(characters.map(c=>c.role))]){const option=document.createElement('option');option.value=role;option.textContent=role;$('#candidate-role').append(option);}
-$('#story-progress').innerHTML=storyStages.map(([id,label])=>`<option value="${id}">${label}</option>`).join('');
-$('#story-progress').value=storyProgress;
 let drag=null;
 document.addEventListener('pointerdown',e=>{const source=e.target.closest('[data-drag-unit]');if(!source||e.button!==0||e.pointerType==='touch')return;drag={id:source.dataset.dragUnit,x:e.clientX,y:e.clientY,active:false,ghost:null};});
 document.addEventListener('pointermove',e=>{

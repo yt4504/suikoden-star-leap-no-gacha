@@ -9,7 +9,7 @@
 - GameWith イベント報酬としてのレオナ・ロモルド: https://gamewith.jp/suikoden-star-leap/573130
 - GameWith 9/24追加の確定加入: サイガ https://gamewith.jp/suikoden-star-leap/578669 ・ガウル https://gamewith.jp/suikoden-star-leap/578670 ・ムウサー https://gamewith.jp/suikoden-star-leap/578668
 - GameWith 初心者ミッション報酬のヒスイ（秘められし力）: https://gamewith.jp/suikoden-star-leap/571646
-- 進行度によるグレー表示はシャンピアのテンリュウ戦前を初期値とする。3章3話クリア時に加入するブブ https://gamewith.jp/suikoden-star-leap/578656 ・ツバキ https://gamewith.jp/suikoden-star-leap/578657 ・ラチャナ https://gamewith.jp/suikoden-star-leap/578658 ・リヒョウ https://gamewith.jp/suikoden-star-leap/578659 をそれまでグレーにする。4章0話以降に加入するホウ https://gamewith.jp/suikoden-star-leap/578654 ・ヴェイル https://gamewith.jp/suikoden-star-leap/578655 ・サイガ https://gamewith.jp/suikoden-star-leap/578669 ・ガウル https://gamewith.jp/suikoden-star-leap/578670 もグレーにする。進行度メニューで解除する。実際の個別加入や交換の達成状況は判定しない。
+- グレー表示は個人のストーリー進行度によらず、現行の更新で加入できないことを確認した版に限る。現時点でその条件を確認できた掲載キャラはない。前回の「4章0話」という章番号から未配信と判断した記述は誤り。ホウ https://gamewith.jp/suikoden-star-leap/578654 ・ヴェイル https://gamewith.jp/suikoden-star-leap/578655 はストーリー進行、サイガ https://gamewith.jp/suikoden-star-leap/578669 ・ガウル https://gamewith.jp/suikoden-star-leap/578670 はセンレン寺での会話による加入が案内されている。
 
 キャラ画像は参考図鑑 https://playershi.com/gensuisp/character/ の顔アイコンと詳細ページの立ち絵から、版を一件ずつ照合したものを `assets/portraits/` と `assets/fullbody/` に保存した。各画像の対応する版と出典URLは `assets/portrait-sources.json` に記録する。一覧では立ち絵を `portrait-crops.mjs` の座標に従ってCSSで顔が見える位置に表示し、編成では顔アイコンを使う。画像の権利は ©Konami Digital Entertainment に帰属する。利用条件については公開者の確認に基づく。画像が読めない場合は名前の頭文字を表示する。追加キャラは入手経路と版を確認してから `characters.mjs` に加える。
 
