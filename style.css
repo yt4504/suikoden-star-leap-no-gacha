@@ -33,3 +33,21 @@
   .card-actions{gap:4px}
   .slot.filled{height:112px}
 }
+
+/* The original face icons are 128px; use the 2048px illustration at its matched crop. */
+.roster{grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}
+.card .portrait img{inset:auto;left:var(--left);top:var(--top);width:var(--zoom);height:var(--zoom);max-width:none;object-fit:fill}
+.card-body{min-height:88px;padding:11px 12px 10px}
+.card-name{font-size:18px;line-height:1.35}
+.card-meta{gap:6px;margin-top:8px}
+.badge{font-size:14px;line-height:1.35;padding:4px 8px;color:#f1ede4;border-color:#63686b}
+.badge.element{color:#f3d49e;border-color:#947347}
+.badge.event{color:#e2cbfa}
+.slot small,.picker-list small{font-size:12px}
+.filters select,.filter-button,.clear-button{font-size:13px}
+@media(max-width:600px){
+  .roster{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card-body{min-height:88px;padding:9px}
+  .card-name{font-size:16px}
+  .badge{font-size:13px;padding:4px 6px}
+}

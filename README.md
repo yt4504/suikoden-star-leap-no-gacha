@@ -10,4 +10,4 @@
 
 `npm test` で保存形式・編成制約・掲載基準を検証します。依存パッケージは不要です。資料と掲載基準は `SOURCES.md` を参照してください。
 
-46版の顔アイコンは `assets/portraits/` に格納し、版ごとの出典は `assets/portrait-sources.json` に記録しています。画像の権利は ©Konami Digital Entertainment に帰属します。
+46版の顔アイコンは `assets/portraits/`、高解像度の立ち絵は `assets/fullbody/` に格納し、版ごとの出典は `assets/portrait-sources.json` に記録しています。画像の権利は ©Konami Digital Entertainment に帰属します。

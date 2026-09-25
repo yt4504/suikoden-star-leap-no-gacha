@@ -1,4 +1,5 @@
 // Only deterministic, non-gacha character versions. See SOURCES.md for verification.
+import {portraitCrops} from './portrait-crops.mjs';
 const rows = [
   ['hero','主人公（里長の子）','風','闘','攻手','story'],
   ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story'],
@@ -51,6 +52,8 @@ const rows = [
 export const characters = rows.map(([id,name,element,weapon,role,source]) => Object.freeze({
   id,name,element,weapon,role,source,confirmed:true,
   image: `./assets/portraits/${id}.png`,
+  largeImage: `./assets/fullbody/${id}.webp`,
+  crop: portraitCrops[id],
 }));
 export const characterById = new Map(characters.map(c => [c.id,c]));
 // Keep the full version name in the catalog for save IDs and accessible labels.
