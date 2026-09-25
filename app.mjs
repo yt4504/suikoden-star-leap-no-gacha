@@ -1,4 +1,4 @@
-import {characters,characterById,displayName} from './characters.mjs';
+import {characters,characterById,displayName} from './characters.mjs?v=wide-4';
 import {createState,setOwned,setLimitBreak,setUnitTags,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState,slots} from './model.mjs';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 
@@ -9,7 +9,7 @@ let state;
 try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createState(); }
 let page='roster',teamIndex=0,selection={unitId:null,slot:null},eventOnly=false;
 const filters={search:'',owned:'all',element:'all',role:'all'};
-const candidateFilters={search:'',owned:'all',role:'all'};
+const candidateFilters={search:'',role:'all'};
 const unit=id=>state.units[id]||{owned:false,breaks:0,tags:''};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
@@ -28,16 +28,16 @@ function renderTeams() {
   if(teamIndex>=state.teams.length) teamIndex=state.teams.length-1;
   $('#team-tabs').innerHTML=state.teams.map((t,i)=>`<button class="${i===teamIndex?'active':''}" data-team="${i}">${esc(t.name||`編成 ${i+1}`)}</button>`).join('');
   const t=state.teams[teamIndex];
-  const slot=(key,label)=>{const c=characterById.get(t[key]),owned=c&&unit(c.id).owned;return `<div class="slot-wrap"><button class="slot${c?' filled':''}${c&&!owned?' unowned':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}${owned?'':' · 未所持'}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
+  const slot=(key,label)=>{const c=characterById.get(t[key]);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
   $('#team-editor').innerHTML=`<div class="team-editor"><div class="team-fields"><label>編成名<input id="team-name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input id="team-tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" id="delete-team" ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea id="team-note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,i)=>slot(s,`前列 ${i+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,i)=>slot(s,`後列 ${i+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div>`;
   renderCandidates();
   $('#candidate-list').scrollTop=candidateScroll;
   $('#candidate-list').scrollLeft=candidateX;
 }
 function renderCandidates() {
-  const list=characters.filter(c=>c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.owned==='all'||unit(c.id).owned)&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
+  const list=characters.filter(c=>c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
   $('#candidate-count').textContent=`${list.length}人`;
-  $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${unit(c.id).owned?' owned':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small><small>${unit(c.id).owned?'所持':'未所持'}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
+  $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
 }
 function render(){renderStats();$('#roster-page').hidden=page!=='roster';$('#teams-page').hidden=page!=='teams';document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='roster')renderRoster();else renderTeams();}
 for(const key of ['element','role']) { const values=[...new Set(characters.map(c=>c[key]))];if(key==='element')values.push(...[...new Set(characters.map(c=>c.weapon))]);for(const v of values){const o=document.createElement('option');o.value=v;o.textContent=v;$('#'+key+'-filter').append(o);} }
@@ -63,7 +63,7 @@ document.addEventListener('click',e=>{
   }catch(err){flash(err.message,true);}
 });
 for(const [input,key] of [['#search','search'],['#owned-filter','owned'],['#element-filter','element'],['#role-filter','role']]) $(input).addEventListener('input',e=>{filters[key]=e.target.value;renderRoster();});
-document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;renderCandidates();}if(e.target.id==='candidate-owned'){candidateFilters.owned=e.target.value;renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
+document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
 document.addEventListener('change',e=>{
   if(['team-name','team-tag','team-note'].includes(e.target.id)){const k={'team-name':'name','team-tag':'tag','team-note':'note'}[e.target.id];persist(updateTeam(state,teamIndex,{[k]:e.target.value}));}
 });

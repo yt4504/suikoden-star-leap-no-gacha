@@ -95,3 +95,23 @@
 @media(max-width:1180px){.team-layout{grid-template-columns:minmax(290px,330px) minmax(0,1fr)}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot .portrait{width:62px;height:62px}}
 @media(max-width:800px){.team-layout{grid-template-columns:1fr}.team-candidates{top:0;padding:9px}.candidate-head{margin-bottom:6px}.candidate-head h3{font-size:16px}.candidate-filters{margin:5px 0}.candidate-list{display:flex;gap:6px;max-height:none;min-height:0;overflow-x:auto;overflow-y:hidden;padding-bottom:4px}.candidate{flex:0 0 125px;display:block;padding:4px;text-align:center}.candidate .portrait{width:76px;height:76px;margin:auto}.candidate-info{gap:2px}.candidate-info strong{font-size:13px}.candidate-info small{font-size:11px}.candidate-info small:last-child{display:none}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot{height:126px}}
 @media(max-width:600px){.team-layout .team-editor{padding:10px}.team-layout .slot{height:122px}.team-layout .slot .portrait{width:58px;height:58px}.team-layout .slot strong{font-size:12px}.team-layout .slot small{font-size:10px}.team-layout .support-row{max-width:150px}}
+
+/* Use the available browser width while keeping the two-column roster. */
+.head-inner,.layout,footer{max-width:none}
+.layout{grid-template-columns:200px minmax(0,1fr)}
+.head-inner{padding:0 28px}
+.sidebar{padding:32px 10px 25px 14px}
+.content{padding:28px 28px 64px}
+footer{padding:20px 28px}
+.team-layout{grid-template-columns:minmax(360px,34%) minmax(0,1fr)}
+.candidate-filters{display:block}
+.candidate-filters select{width:100%}
+.candidate .portrait{width:96px;height:96px}
+.candidate.owned .candidate-info small:last-child{color:#c4c3be}
+.team-layout .slot{height:142px}
+.team-layout .slot .portrait{width:74px;height:74px}
+.team-layout .slot small{font-size:12px}
+@media(max-width:1180px){.team-layout{grid-template-columns:minmax(280px,36%) minmax(0,1fr)}.team-layout .slot{height:136px}.team-layout .slot .portrait{width:68px;height:68px}}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.sidebar{padding:12px 22px}.content{padding:24px 22px 60px}}
+@media(max-width:800px){.team-layout{grid-template-columns:1fr}.candidate .portrait{width:76px;height:76px}.candidate-info small:last-child{display:block}.team-layout .slot{height:132px}.team-layout .slot .portrait{width:68px;height:68px}}
+@media(max-width:600px){.head-inner{padding:17px 18px}.content{padding:15px 14px 55px}.team-layout .slot{height:126px}.team-layout .slot .portrait{width:62px;height:62px}.team-layout .slot small{font-size:11px}}

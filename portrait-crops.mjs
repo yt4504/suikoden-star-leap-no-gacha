@@ -46,9 +46,9 @@ export const portraitCrops = Object.freeze({
     "width": 448
   },
   "gonoh": {
-    "x": 203,
-    "y": 552,
-    "width": 895
+    "x": 860,
+    "y": 291,
+    "width": 411
   },
   "haruka": {
     "x": 767,
