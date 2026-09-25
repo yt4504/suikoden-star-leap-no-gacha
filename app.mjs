@@ -13,7 +13,7 @@ const candidateFilters={search:'',owned:'all',role:'all'};
 const unit=id=>state.units[id]||{owned:false,breaks:0,tags:''};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
-const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy"${style} onerror="this.remove()"></span>`;};
+const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy" draggable="false"${style} onerror="this.remove()"></span>`;};
 function renderStats() { $('#nav-count').textContent=characters.length;$('#team-count').textContent=state.teams.length;$('#owned-count').textContent=characters.filter(c=>unit(c.id).owned).length;$('#total-count').textContent=characters.length;$('#event-count').textContent=characters.filter(c=>c.source==='event').length; }
 function renderRoster() {
   const list=characters.filter(c=>{
