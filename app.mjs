@@ -1,4 +1,4 @@
-import {characters,characterById,displayName} from './characters.mjs?v=wide-4';
+import {characters,characterById,displayName} from './characters.mjs?v=additions-12';
 import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState} from './model.mjs';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 

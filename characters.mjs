@@ -1,5 +1,5 @@
 // Only deterministic, non-gacha character versions. See SOURCES.md for verification.
-import {portraitCrops} from './portrait-crops.mjs?v=wide-4';
+import {portraitCrops} from './portrait-crops.mjs?v=additions-12';
 const rows = [
   ['hero','主人公（里長の子）','風','闘','攻手','story'],
   ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story'],
