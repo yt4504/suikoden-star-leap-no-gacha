@@ -1,5 +1,5 @@
 import {characters,characterById,displayName} from './characters.mjs?v=wide-4';
-import {createState,setOwned,setLimitBreak,setUnitTags,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState,slots} from './model.mjs';
+import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState} from './model.mjs';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 
 const STORAGE='star-leap-no-gacha-v1';
@@ -7,22 +7,11 @@ const $=selector=>document.querySelector(selector);
 const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 let state;
 try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createState(); }
-let page='roster',teamIndex=0,selection={unitId:null,slot:null},eventOnly=false;
-const filters={search:'',owned:'all',element:'all',role:'all'};
+let teamIndex=0,selection={unitId:null,slot:null};
 const candidateFilters={search:'',role:'all'};
-const unit=id=>state.units[id]||{owned:false,breaks:0,tags:''};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
 const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy" draggable="false"${style} onerror="this.remove()"></span>`;};
-function renderStats() { $('#nav-count').textContent=characters.length;$('#team-count').textContent=state.teams.length;$('#owned-count').textContent=characters.filter(c=>unit(c.id).owned).length;$('#total-count').textContent=characters.length;$('#event-count').textContent=characters.filter(c=>c.source==='event').length; }
-function renderRoster() {
-  const list=characters.filter(c=>{
-    const q=filters.search.toLocaleLowerCase();
-    return (!q||c.name.toLocaleLowerCase().includes(q)||(unit(c.id).tags||'').toLocaleLowerCase().includes(q))&&(filters.owned==='all'||unit(c.id).owned===(filters.owned==='owned'))&&(filters.element==='all'||c.element===filters.element||c.weapon===filters.element)&&(filters.role==='all'||c.role===filters.role)&&(!eventOnly||c.source==='event');
-  });
-  $('#result-count').textContent=`${list.length} 人を表示`;
-  $('#roster').innerHTML=list.length?list.map(c=>{const u=unit(c.id);return `<article class="card${u.owned?' owned':''}" title="${esc(c.name)}"><div class="card-top">${portrait(c,true)}<div class="card-body"><div class="card-name">${esc(displayName(c))}</div><div class="card-meta"><span class="badge element">${c.element} · ${c.weapon}</span><span class="badge">${c.role}</span>${c.source==='event'?'<span class="badge event">イベント</span>':''}</div></div></div><div class="tags" title="攻略タグ">${u.tags?'# '+esc(u.tags):'タグ未設定'}</div><div class="card-actions"><button class="own-button" data-own="${c.id}" aria-label="${esc(c.name)}を${u.owned?'未所持':'所持'}にする">${u.owned?'✓ 所持':'＋ 所持'}</button><span class="break-label">凸</span><span class="stepper"><button data-break="${c.id}" data-delta="-1" ${!u.breaks?'disabled':''} aria-label="${esc(c.name)}の凸数を減らす">−</button><strong>${u.breaks||0}</strong><button data-break="${c.id}" data-delta="1" ${u.breaks===6?'disabled':''} aria-label="${esc(c.name)}の凸数を増やす">＋</button></span><button class="tag-button" data-tag="${c.id}" aria-label="${esc(c.name)}の攻略タグを編集">タグ</button></div></article>`}).join(''):'<div class="empty">条件に合うキャラがいません。絞り込みを変更してください。</div>';
-}
 function renderTeams() {
   const candidateScroll=$('#candidate-list').scrollTop,candidateX=$('#candidate-list').scrollLeft;
   if(teamIndex>=state.teams.length) teamIndex=state.teams.length-1;
@@ -39,19 +28,12 @@ function renderCandidates() {
   $('#candidate-count').textContent=`${list.length}人`;
   $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
 }
-function render(){renderStats();$('#roster-page').hidden=page!=='roster';$('#teams-page').hidden=page!=='teams';document.body.classList.toggle('teams-view',page==='teams');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='roster')renderRoster();else renderTeams();}
-for(const key of ['element','role']) { const values=[...new Set(characters.map(c=>c[key]))];if(key==='element')values.push(...[...new Set(characters.map(c=>c.weapon))]);for(const v of values){const o=document.createElement('option');o.value=v;o.textContent=v;$('#'+key+'-filter').append(o);} }
+function render(){renderTeams();}
 let suppressClick=false;
 document.addEventListener('click',e=>{
   if(suppressClick){e.preventDefault();suppressClick=false;return;}
   const b=e.target.closest('button');if(!b)return;
   try {
-    if(b.dataset.page){page=b.dataset.page;selection={unitId:null,slot:null};render();return;}
-    if(b.dataset.own){persist(setOwned(state,b.dataset.own,!unit(b.dataset.own).owned));return;}
-    if(b.dataset.break){persist(setLimitBreak(state,b.dataset.break,Math.min(6,Math.max(0,(unit(b.dataset.break).breaks||0)+Number(b.dataset.delta)))));return;}
-    if(b.dataset.tag){const id=b.dataset.tag;const value=prompt(`${characterById.get(id).name}の攻略タグ（読点区切り）`,unit(id).tags||'');if(value!==null)persist(setUnitTags(state,id,value));return;}
-    if(b.id==='event-filter'){eventOnly=!eventOnly;b.setAttribute('aria-pressed',String(eventOnly));renderRoster();return;}
-    if(b.id==='clear-filters'){filters.search='';filters.owned='all';filters.element='all';filters.role='all';eventOnly=false;$('#search').value='';for(const id of ['owned','element','role'])$('#'+id+'-filter').value='all';$('#event-filter').setAttribute('aria-pressed','false');renderRoster();return;}
     if(b.id==='add-team'){persist(addTeam(state));teamIndex=state.teams.length-1;render();return;}
     if(b.dataset.team){teamIndex=Number(b.dataset.team);selection={unitId:null,slot:null};render();return;}
     if(b.dataset.clearSlot){persist(assignSlot(state,teamIndex,b.dataset.clearSlot,null));selection={unitId:null,slot:null};return;}
@@ -62,7 +44,6 @@ document.addEventListener('click',e=>{
     if(b.id==='import'){$('#file').click();return;}
   }catch(err){flash(err.message,true);}
 });
-for(const [input,key] of [['#search','search'],['#owned-filter','owned'],['#element-filter','element'],['#role-filter','role']]) $(input).addEventListener('input',e=>{filters[key]=e.target.value;renderRoster();});
 document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
 document.addEventListener('change',e=>{
   if(['team-name','team-tag','team-note'].includes(e.target.id)){const k={'team-name':'name','team-tag':'tag','team-note':'note'}[e.target.id];persist(updateTeam(state,teamIndex,{[k]:e.target.value}));}
@@ -70,7 +51,7 @@ document.addEventListener('change',e=>{
 $('#file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const incoming=importState(await file.text());persist(incoming);teamIndex=0;selection={unitId:null,slot:null};flash('JSONを読み込みました');}catch(err){flash(`読み込み失敗：${err.message}`,true);}finally{e.target.value='';}});
 for(const role of [...new Set(characters.map(c=>c.role))]){const option=document.createElement('option');option.value=role;option.textContent=role;$('#candidate-role').append(option);}
 let drag=null;
-document.addEventListener('pointerdown',e=>{const source=e.target.closest('[data-drag-unit]');if(page!=='teams'||!source||e.button!==0||e.pointerType==='touch')return;drag={id:source.dataset.dragUnit,x:e.clientX,y:e.clientY,active:false,ghost:null};});
+document.addEventListener('pointerdown',e=>{const source=e.target.closest('[data-drag-unit]');if(!source||e.button!==0||e.pointerType==='touch')return;drag={id:source.dataset.dragUnit,x:e.clientX,y:e.clientY,active:false,ghost:null};});
 document.addEventListener('pointermove',e=>{
   if(!drag)return;
   if(!drag.active&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>10){drag.active=true;drag.ghost=document.createElement('div');drag.ghost.className='drag-ghost';drag.ghost.textContent=displayName(characterById.get(drag.id));document.body.append(drag.ghost);document.body.classList.add('dragging-unit');}
