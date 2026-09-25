@@ -115,3 +115,16 @@ footer{padding:20px 28px}
 @media(max-width:960px){.layout{grid-template-columns:1fr}.sidebar{padding:12px 22px}.content{padding:24px 22px 60px}}
 @media(max-width:800px){.team-layout{grid-template-columns:1fr}.candidate .portrait{width:76px;height:76px}.candidate-info small:last-child{display:block}.team-layout .slot{height:132px}.team-layout .slot .portrait{width:68px;height:68px}}
 @media(max-width:600px){.head-inner{padding:17px 18px}.content{padding:15px 14px 55px}.team-layout .slot{height:126px}.team-layout .slot .portrait{width:62px;height:62px}.team-layout .slot small{font-size:11px}}
+
+/* On the formation page, the navigation becomes a short horizontal strip. */
+.teams-view .layout{grid-template-columns:minmax(0,1fr)}
+.teams-view .sidebar{border-right:0;border-bottom:1px solid #32373e;padding:7px 28px;display:block}
+.teams-view .aside-title,.teams-view .aside-foot{display:none}
+.teams-view .tabs{display:flex;gap:6px}
+.teams-view .tabs button{width:auto;padding:8px 15px}
+.teams-view .content{padding-top:13px}
+.teams-view .team-layout{grid-template-columns:minmax(360px,40%) minmax(0,1fr)}
+.teams-view .candidate .portrait{width:120px;height:120px}
+@media(max-width:1180px){.teams-view .team-layout{grid-template-columns:minmax(310px,39%) minmax(0,1fr)}}
+@media(max-width:800px){.teams-view .team-layout{grid-template-columns:1fr}.teams-view .candidate .portrait{width:76px;height:76px}}
+@media(max-width:600px){.teams-view .sidebar{padding:6px 14px}.teams-view .tabs button{padding:8px 11px}.teams-view .content{padding-top:12px}}

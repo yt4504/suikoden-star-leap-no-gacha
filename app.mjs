@@ -39,7 +39,7 @@ function renderCandidates() {
   $('#candidate-count').textContent=`${list.length}人`;
   $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
 }
-function render(){renderStats();$('#roster-page').hidden=page!=='roster';$('#teams-page').hidden=page!=='teams';document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='roster')renderRoster();else renderTeams();}
+function render(){renderStats();$('#roster-page').hidden=page!=='roster';$('#teams-page').hidden=page!=='teams';document.body.classList.toggle('teams-view',page==='teams');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='roster')renderRoster();else renderTeams();}
 for(const key of ['element','role']) { const values=[...new Set(characters.map(c=>c[key]))];if(key==='element')values.push(...[...new Set(characters.map(c=>c.weapon))]);for(const v of values){const o=document.createElement('option');o.value=v;o.textContent=v;$('#'+key+'-filter').append(o);} }
 let suppressClick=false;
 document.addEventListener('click',e=>{
