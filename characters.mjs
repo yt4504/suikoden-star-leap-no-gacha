@@ -61,4 +61,4 @@ export const characters = rows.map(([id,name,element,weapon,role,source]) => Obj
 }));
 export const characterById = new Map(characters.map(c => [c.id,c]));
 // Keep the full version name in the catalog for save IDs and accessible labels.
-export const displayName = character => character.name.replace(/（[^）]*）$/, '');
+export const displayName = character => character.id === 'hisui_mission' ? 'SSRヒスイ' : character.name.replace(/（[^）]*）$/, '');
