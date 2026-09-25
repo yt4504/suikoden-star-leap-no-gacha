@@ -8,7 +8,8 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt
 let state;
 try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createState(); }
 let teamIndex=0,selection={unitId:null,slot:null};
-const candidateFilters={search:'',role:'all'};
+const elements=[...new Set(characters.map(c=>c.element))];
+const candidateFilters={search:'',role:'all',element:elements[0]};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
 const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy" draggable="false"${style} onerror="this.remove()"></span>`;};
@@ -24,7 +25,9 @@ function renderTeams() {
   $('#candidate-list').scrollLeft=candidateX;
 }
 function renderCandidates() {
-  const list=characters.filter(c=>c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
+  const list=characters.filter(c=>(candidateFilters.element==='all'||c.element===candidateFilters.element)&&c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
+  $('#candidate-title').textContent=candidateFilters.element==='all'?'仲間一覧':`${candidateFilters.element}属性の仲間`;
+  $('#candidate-elements').innerHTML=[['all','全員'],...elements.map(e=>[e,e])].map(([value,label])=>`<button type="button" data-element="${value}" aria-pressed="${candidateFilters.element===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>c.element===value).length}</span></button>`).join('');
   $('#candidate-count').textContent=`${list.length}人`;
   $('#candidate-list').innerHTML=list.map(c=>`<button class="candidate${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" data-drag-unit="${c.id}" aria-label="${esc(c.name)}を選ぶ" aria-pressed="${selection.unitId===c.id}">${portrait(c,true)}<span class="candidate-info"><strong>${esc(displayName(c))}</strong><small>${c.element} · ${c.role}</small></span></button>`).join('')||'<p class="candidate-empty">該当する仲間はいません</p>';
 }
@@ -34,6 +37,7 @@ document.addEventListener('click',e=>{
   if(suppressClick){e.preventDefault();suppressClick=false;return;}
   const b=e.target.closest('button');if(!b)return;
   try {
+    if(b.dataset.element){candidateFilters.element=b.dataset.element;$('#candidate-list').scrollTop=0;renderCandidates();return;}
     if(b.id==='add-team'){persist(addTeam(state));teamIndex=state.teams.length-1;render();return;}
     if(b.dataset.team){teamIndex=Number(b.dataset.team);selection={unitId:null,slot:null};render();return;}
     if(b.dataset.clearSlot){persist(assignSlot(state,teamIndex,b.dataset.clearSlot,null));selection={unitId:null,slot:null};return;}
@@ -44,7 +48,7 @@ document.addEventListener('click',e=>{
     if(b.id==='import'){$('#file').click();return;}
   }catch(err){flash(err.message,true);}
 });
-document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
+document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;if(candidateFilters.search)candidateFilters.element='all';renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
 document.addEventListener('change',e=>{
   if(['team-name','team-tag','team-note'].includes(e.target.id)){const k={'team-name':'name','team-tag':'tag','team-note':'note'}[e.target.id];persist(updateTeam(state,teamIndex,{[k]:e.target.value}));}
 });
