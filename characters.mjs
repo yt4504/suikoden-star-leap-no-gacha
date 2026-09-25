@@ -53,3 +53,5 @@ export const characters = rows.map(([id,name,element,weapon,role,source,image]) 
   image: image ? `https://www.konami.com/games/suikoden/star_leap/s/images/guideline/${image}` : null,
 }));
 export const characterById = new Map(characters.map(c => [c.id,c]));
+// Keep the full version name in the catalog for save IDs and accessible labels.
+export const displayName = character => character.name.replace(/（[^）]*）$/, '');
