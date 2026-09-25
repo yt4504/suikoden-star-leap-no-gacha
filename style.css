@@ -128,3 +128,13 @@ footer{padding:20px 28px}
 @media(max-width:1180px){.teams-view .team-layout{grid-template-columns:minmax(310px,39%) minmax(0,1fr)}}
 @media(max-width:800px){.teams-view .team-layout{grid-template-columns:1fr}.teams-view .candidate .portrait{width:76px;height:76px}}
 @media(max-width:600px){.teams-view .sidebar{padding:6px 14px}.teams-view .tabs button{padding:8px 11px}.teams-view .content{padding-top:12px}}
+
+/* Five visible teammates per row on wide screens; rear ranks sit behind the front. */
+.teams-view .formation{grid-template-columns:minmax(0,1fr)}
+.teams-view .candidate-list{grid-template-columns:repeat(5,minmax(0,1fr))}
+.teams-view .candidate .portrait{width:min(120px,100%);height:auto;aspect-ratio:1}
+.teams-view .candidate{padding:6px 3px}
+@media(max-width:1700px){.teams-view .candidate-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1450px){.teams-view .candidate-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1100px){.teams-view .candidate-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.teams-view .candidate-list{display:flex}.teams-view .candidate .portrait{width:76px;height:76px}}

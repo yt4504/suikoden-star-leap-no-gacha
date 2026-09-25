@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#181b20"><title>STAR LEAP｜ガチャ縛り編成帳</title><link rel="stylesheet" href="./style.css?v=left-5"></head>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#181b20"><title>STAR LEAP｜ガチャ縛り編成帳</title><link rel="stylesheet" href="./style.css?v=rows-6"></head>
 <body>
   <header class="site-head"><div class="head-inner"><div class="wordmark"><span class="crest">✦</span><div><small>FAN MADE PLANNER · NO GACHA</small><h1>STAR LEAP <em>編成帳</em></h1></div></div><div class="head-right"><span class="edition">確定入手キャラ専用</span><button id="export" class="ghost">JSON保存 <span>↗</span></button><button id="import" class="ghost">JSON読込 <span>↘</span></button><input id="file" type="file" accept="application/json,.json" hidden></div></div></header>
   <main class="layout"><aside class="sidebar"><div class="aside-title">NAVIGATION <span>01 / 02</span></div><nav class="tabs" aria-label="ページ切替"><button data-page="roster" class="active"><span>◈</span> キャラ一覧 <b id="nav-count"></b></button><button data-page="teams"><span>▦</span> 編成作成 <b id="team-count"></b></button></nav><div class="aside-foot"><span class="gold-rule"></span><p>ガチャを回さない旅に、<br>今いる仲間の選択肢を。</p><small>記録はこのブラウザに自動保存されます。端末を変えるときはJSONを保存してください。</small></div></aside>
@@ -10,5 +10,5 @@
   <div id="teams-page" hidden><div class="section-head team-title"><div><span class="eyebrow">02 — FORMATIONS</span><h2>編成作成</h2><p>左の仲間を枠へドラッグ。タップでも配置できます。</p></div><button id="add-team" class="primary">＋ 編成を追加</button></div><div class="team-tabs" id="team-tabs"></div><div class="team-layout"><aside class="team-candidates" aria-label="編成候補"><div class="candidate-head"><h3>仲間一覧</h3><span id="candidate-count"></span></div><input id="candidate-search" type="search" placeholder="名前を検索" aria-label="編成候補を検索"><div class="candidate-filters"><select id="candidate-role" aria-label="編成候補の役割"><option value="all">役割：すべて</option></select></div><div class="candidate-list" id="candidate-list"></div></aside><div id="team-editor"></div></div></div>
   </section></main>
   <footer><p>非公式ファンツール · ゲームおよびキャラクターの権利は ©Konami Digital Entertainment に帰属します。</p><a href="https://www.konami.com/games/suikoden/star_leap/jp/ja/guideline/fankit" target="_blank" rel="noopener">公式 Fan kit ↗</a></footer>
-  <script type="module" src="./app.mjs?v=left-5"></script>
+  <script type="module" src="./app.mjs?v=rows-6"></script>
 </body></html>
