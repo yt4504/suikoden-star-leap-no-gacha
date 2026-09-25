@@ -84,6 +84,8 @@
 .team-layout .slot.selected{outline:2px solid #f4d48e}
 .remove-slot{position:absolute;top:5px;right:5px;border:1px solid #747271;background:#303236;color:#efe0c3;border-radius:50%;width:23px;height:23px;line-height:20px;padding:0;font-size:17px}
 .remove-slot:hover{background:#705044}
+.drag-ghost{position:fixed;z-index:1000;pointer-events:none;padding:8px 12px;border:1px solid #e1bd7e;border-radius:5px;background:#39342a;color:#fff0d2;box-shadow:0 8px 22px #0009;font-size:14px;font-weight:700}
+.dragging-unit,.dragging-unit *{user-select:none;cursor:grabbing!important}
 .team-layout .support-row{max-width:210px}
 @media(max-width:1180px){.team-layout{grid-template-columns:minmax(210px,245px) minmax(0,1fr)}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot .portrait{width:82px;height:84px}}
 @media(max-width:800px){.team-layout{grid-template-columns:1fr}.team-candidates{top:0;padding:9px}.candidate-head{margin-bottom:6px}.candidate-head h3{font-size:16px}.candidate-filters{margin:5px 0}.candidate-list{display:flex;gap:6px;max-height:none;min-height:0;overflow-x:auto;overflow-y:hidden;padding-bottom:4px}.candidate{flex:0 0 125px;display:block;padding:4px;text-align:center}.candidate .portrait{width:100%;height:76px}.candidate-info{gap:2px}.candidate-info strong{font-size:13px}.candidate-info small{font-size:11px}.candidate-info small:last-child{display:none}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot{height:152px}}
