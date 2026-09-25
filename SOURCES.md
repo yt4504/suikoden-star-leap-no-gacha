@@ -8,4 +8,4 @@
 - Gamerch 108星一覧と章別加入: https://gamerch.com/suikoden/1005683
 - GameWith イベント報酬としてのレオナ・ロモルド: https://gamewith.jp/suikoden-star-leap/573130
 
-公式Fan kitのイラストは主人公・ヒスイ・シーリーン・シャプールのものを参照する。外部画像が読めない場合は名前の頭文字を表示する。追加キャラは入手経路と版を確認してから `characters.mjs` に加える。
+キャラ画像は参考図鑑 https://playershi.com/gensuisp/character/ の顔アイコンから、版を一件ずつ照合したものを `assets/portraits/` に保存した。各画像の対応する版と出典URLは `assets/portrait-sources.json` に記録する。画像の権利は ©Konami Digital Entertainment に帰属する。利用条件については公開者の確認に基づく。画像が読めない場合は名前の頭文字を表示する。追加キャラは入手経路と版を確認してから `characters.mjs` に加える。

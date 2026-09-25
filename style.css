@@ -12,7 +12,7 @@
 .roster{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .card-top{display:block;padding:0}
 .card .portrait{display:grid;width:100%;height:auto;aspect-ratio:1;border-radius:0;background:linear-gradient(145deg,#5a5449,#30373a);font-size:56px}
-.card .portrait img{object-fit:cover;object-position:center 20%;background:#44443d;transform:scale(1.9);transform-origin:center 16%}
+.card .portrait img{object-fit:cover;object-position:center;background:#44443d}
 .card-body{padding:10px 11px 9px;min-height:70px}
 .card-name{font-size:15px;line-height:1.3}
 .card-meta{margin-top:6px}

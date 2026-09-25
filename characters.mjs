@@ -1,9 +1,9 @@
 // Only deterministic, non-gacha character versions. See SOURCES.md for verification.
 const rows = [
-  ['hero','主人公（里長の子）','風','闘','攻手','story','chara_hero.png'],
-  ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story','chara_hisui.png'],
-  ['shirin','シーリーン（幼馴染の討伐娘）','風','剣','攻手','story','chara_shirin.png'],
-  ['shapur','シャプール（里長の右腕）','水','闘','攻手','story','chara_shapur.png'],
+  ['hero','主人公（里長の子）','風','闘','攻手','story'],
+  ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story'],
+  ['shirin','シーリーン（幼馴染の討伐娘）','風','剣','攻手','story'],
+  ['shapur','シャプール（里長の右腕）','水','闘','攻手','story'],
   ['viki','ビッキー（瞬きの魔法少女）','雷','智','攻手','story'],
   ['mauser','マウサー','火','剣','攻手','star'],
   ['marie','マリエ','火','智','補助','star'],
@@ -48,9 +48,9 @@ const rows = [
   ['romold','ロモルド','土','闘','攻手','event'],
 ];
 
-export const characters = rows.map(([id,name,element,weapon,role,source,image]) => Object.freeze({
+export const characters = rows.map(([id,name,element,weapon,role,source]) => Object.freeze({
   id,name,element,weapon,role,source,confirmed:true,
-  image: image ? `https://www.konami.com/games/suikoden/star_leap/s/images/guideline/${image}` : null,
+  image: `./assets/portraits/${id}.png`,
 }));
 export const characterById = new Map(characters.map(c => [c.id,c]));
 // Keep the full version name in the catalog for save IDs and accessible labels.
