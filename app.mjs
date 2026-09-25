@@ -11,7 +11,7 @@ const filters={search:'',owned:'all',element:'all',role:'all'};
 const unit=id=>state.units[id]||{owned:false,breaks:0,tags:''};
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
-const portrait=c=>`<span class="portrait">${c.image?`<img src="${esc(c.image)}" alt="" loading="lazy" onerror="this.remove()">`:esc(c.name[0])}</span>`;
+const portrait=c=>`<span class="portrait">${esc(c.name[0])}${c.image?`<img src="${esc(c.image)}" alt="" loading="lazy" onerror="this.remove()">`:''}</span>`;
 function renderStats() { $('#nav-count').textContent=characters.length;$('#team-count').textContent=state.teams.length;$('#owned-count').textContent=characters.filter(c=>unit(c.id).owned).length;$('#total-count').textContent=characters.length;$('#event-count').textContent=characters.filter(c=>c.source==='event').length; }
 function renderRoster() {
   const list=characters.filter(c=>{
