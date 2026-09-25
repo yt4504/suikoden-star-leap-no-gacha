@@ -216,3 +216,15 @@ footer{padding:20px 28px}
 .planner-only .slot.filled[data-role]{border-color:var(--role-color)}
 .planner-only .slot[data-role] small{background:var(--role-dark);border-radius:3px;padding:3px 7px;color:#fff;font-size:12px;font-weight:700}
 @media(max-width:600px){.candidate-legend{max-width:190px}.candidate-legend span{padding:2px 5px}}
+
+/* Story progress dims future allies while keeping saved teams and planning available. */
+.candidate-controls{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
+.candidate-controls .candidate-elements{flex:1 1 auto;min-width:0}
+.candidate-controls #story-progress{flex:0 0 auto;width:190px;max-width:100%;height:31px;background:#252b30;color:#f0d8ad;border:1px solid #746348;border-radius:4px;padding:3px 7px;font-size:12px;font-weight:700}
+.candidate.future{background:#272a2d;border-color:#5a5c5d;color:#a5a6a7}
+.candidate.future[data-role]{border-top-color:#777b7d}
+.candidate.future .portrait img,.slot.future .portrait img{filter:grayscale(1) brightness(.62);opacity:.72}
+.candidate.future .candidate-role,.planner-only .slot.future[data-role] small{background:#52565a!important;color:#d0d1d1!important}
+.candidate.future:hover{border-color:#9b9da0;background:#303437}
+.planner-only .slot.future.filled[data-role]{border-color:#686c70;color:#b8bbbd;background:#282c2e}
+@media(max-width:600px){.candidate-controls #story-progress{flex:1 1 165px}}
