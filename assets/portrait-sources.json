@@ -274,5 +274,29 @@
     "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0117_000_faceicon00.png",
     "detail": "https://playershi.com/gensuisp/character/character-244/310117001/",
     "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0117_000_fullbody00_00.webp"
+  },
+  "saiga": {
+    "version": "サイガ 堅実な師範",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0047_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-182/310047001/",
+    "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0047_000_fullbody00_00.webp"
+  },
+  "gaur": {
+    "version": "ガウル 豪快な師範",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0046_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-181/310046001/",
+    "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0046_000_fullbody00_00.webp"
+  },
+  "muuser": {
+    "version": "ムウサー 陽気ダンサーバニー",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0054_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-1007201/310054001/",
+    "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0054_000_fullbody00_00.webp"
+  },
+  "hisui_mission": {
+    "version": "ヒスイ 秘められし力",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0004_001_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-24/310004002/",
+    "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0004_001_fullbody00_00.webp"
   }
 }
