@@ -1,5 +1,25 @@
 // Crops locate each 128px icon within its 2048px illustration.
 export const portraitCrops = Object.freeze({
+  "saiga": {
+    "x": 790,
+    "y": 135,
+    "width": 416
+  },
+  "gaur": {
+    "x": 790,
+    "y": 240,
+    "width": 448
+  },
+  "muuser": {
+    "x": 755,
+    "y": 850,
+    "width": 448
+  },
+  "hisui_mission": {
+    "x": 565,
+    "y": 500,
+    "width": 448
+  },
   "avery": {
     "x": 686,
     "y": 189,

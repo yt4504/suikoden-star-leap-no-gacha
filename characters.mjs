@@ -3,6 +3,7 @@ import {portraitCrops} from './portrait-crops.mjs?v=wide-4';
 const rows = [
   ['hero','主人公（里長の子）','風','闘','攻手','story'],
   ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story'],
+  ['hisui_mission','ヒスイ（秘められし力）','風','智','回復','mission'],
   ['shirin','シーリーン（幼馴染の討伐娘）','風','剣','攻手','story'],
   ['shapur','シャプール（里長の右腕）','水','闘','攻手','story'],
   ['viki','ビッキー（瞬きの魔法少女）','雷','智','攻手','story'],
@@ -45,6 +46,9 @@ const rows = [
   ['tsubaki','ツバキ','火','剣','攻手','story'],
   ['rachana_story','ラチャナ（センレン寺総師範）','火','智','攻手','story'],
   ['rihyo','リヒョウ','火','闘','攻手','story'],
+  ['saiga','サイガ','火','智','守護','star'],
+  ['gaur','ガウル','火','智','守護','star'],
+  ['muuser','ムウサー','雷','闘','補助','star'],
   ['leona_event','レオナ（赤紅の傭兵団長）','火','闘','補助','event'],
   ['romold','ロモルド','土','闘','攻手','event'],
 ];
