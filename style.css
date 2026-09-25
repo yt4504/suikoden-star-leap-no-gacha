@@ -51,3 +51,40 @@
   .card-name{font-size:16px}
   .badge{font-size:13px;padding:4px 6px}
 }
+
+/* The team roster and formation remain visible together. */
+.portrait.high-res img{inset:auto;left:var(--left);top:var(--top);width:var(--zoom);height:var(--zoom);max-width:none;object-fit:fill}
+.team-layout{display:grid;grid-template-columns:minmax(245px,295px) minmax(0,1fr);align-items:start;gap:16px}
+.team-candidates{position:sticky;top:12px;min-width:0;border:1px solid #4d5357;border-radius:7px;background:#252a30;padding:13px;z-index:5}
+.candidate-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.candidate-head h3{font:600 19px 'Shippori Mincho',serif;color:#e8cc9d;margin:0}
+.candidate-head span{color:#bbb6ac;font-size:12px}
+.team-candidates input,.candidate-filters select{width:100%;min-width:0;background:#171b20;color:#eee8df;border:1px solid #555a5e;border-radius:4px;padding:9px 10px;font-size:13px}
+.candidate-filters{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:7px 0 10px}
+.candidate-list{display:grid;gap:6px;max-height:calc(100vh - 225px);min-height:100px;overflow:auto;overscroll-behavior:contain}
+.candidate{display:flex;align-items:center;gap:10px;width:100%;min-width:0;text-align:left;background:#323940;color:#eee9e0;border:1px solid #565c60;border-radius:5px;padding:5px;cursor:grab}
+.candidate:hover,.candidate.selected{border-color:#e4bd76;background:#444039}
+.candidate.owned .candidate-info small:last-child{color:#e9c583}
+.candidate .portrait{width:72px;height:78px;border-radius:4px;font-size:22px}
+.candidate-info{display:grid;gap:3px;min-width:0}
+.candidate-info strong{font-size:15px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.candidate-info small{font-size:12px;color:#c4c3be}
+.candidate-empty{color:#bbb9b1;font-size:13px}
+.team-layout #team-editor{min-width:0}
+.team-layout .team-editor{padding:17px}
+.team-layout .formation{gap:10px;margin-top:20px}
+.team-layout .formation-group{min-width:0;padding:11px}
+.team-layout .slot-grid{gap:6px}
+.slot-wrap{position:relative;min-width:0}
+.team-layout .slot{height:168px;width:100%;padding:8px 4px;gap:5px}
+.team-layout .slot .portrait{width:76px;height:78px;border-radius:5px;margin:0;font-size:24px}
+.team-layout .slot strong{font-size:14px;line-height:1.3;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.team-layout .slot small{font-size:12px;line-height:1.3}
+.team-layout .slot.drop-target{border:2px solid #e7c481;background:#4c493e}
+.team-layout .slot.selected{outline:2px solid #f4d48e}
+.remove-slot{position:absolute;top:5px;right:5px;border:1px solid #747271;background:#303236;color:#efe0c3;border-radius:50%;width:23px;height:23px;line-height:20px;padding:0;font-size:17px}
+.remove-slot:hover{background:#705044}
+.team-layout .support-row{max-width:210px}
+@media(max-width:1180px){.team-layout{grid-template-columns:minmax(210px,245px) minmax(0,1fr)}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot .portrait{width:82px;height:84px}}
+@media(max-width:800px){.team-layout{grid-template-columns:1fr}.team-candidates{top:0;padding:9px}.candidate-head{margin-bottom:6px}.candidate-head h3{font-size:16px}.candidate-filters{margin:5px 0}.candidate-list{display:flex;gap:6px;max-height:none;min-height:0;overflow-x:auto;overflow-y:hidden;padding-bottom:4px}.candidate{flex:0 0 125px;display:block;padding:4px;text-align:center}.candidate .portrait{width:100%;height:76px}.candidate-info{gap:2px}.candidate-info strong{font-size:13px}.candidate-info small{font-size:11px}.candidate-info small:last-child{display:none}.team-layout .formation{grid-template-columns:1fr}.team-layout .slot{height:152px}}
+@media(max-width:600px){.team-layout .team-editor{padding:11px}.team-layout .slot{height:138px}.team-layout .slot .portrait{width:66px;height:70px}.team-layout .slot strong{font-size:12px}.team-layout .slot small{font-size:10px}.team-layout .support-row{max-width:165px}}
