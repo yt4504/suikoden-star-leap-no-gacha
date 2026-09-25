@@ -1,0 +1,232 @@
+{
+  "hero": {
+    "version": "主人公 未確定",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0001_001_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-23/310001001/"
+  },
+  "hisui": {
+    "version": "ヒスイ 屋敷の使用人",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0004_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-24/310004001/"
+  },
+  "shirin": {
+    "version": "シーリーン 幼馴染の討伐娘",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0006_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-18/310006001/"
+  },
+  "shapur": {
+    "version": "シャプール 里長の右腕",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0008_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-8/310008001/"
+  },
+  "viki": {
+    "version": "ビッキー 瞬きの魔法少女",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0007_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-17/310007001/"
+  },
+  "mauser": {
+    "version": "マウサー 勇敢ナイトバニー",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0052_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-246/310052001/"
+  },
+  "marie": {
+    "version": "マリエ 宿屋の看板娘",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0005_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-1/310005001/"
+  },
+  "yua": {
+    "version": "ユア 情熱の料理っ娘",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0018_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-25/310018001/"
+  },
+  "chloe": {
+    "version": "クロエ 麗しの道具屋",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0010_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-9/310010001/"
+  },
+  "flanagan": {
+    "version": "フラナガン 頑丈な守衛",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0016_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-4/310016001/"
+  },
+  "belladonna": {
+    "version": "ベラドンナ 合理の建築士",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0017_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-16/310017001/"
+  },
+  "orhan": {
+    "version": "オルハン 常酔の店主",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0003_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-6/310003001/"
+  },
+  "fara": {
+    "version": "ファラ 快活な交易商",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0011_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-21/310011001/"
+  },
+  "standard": {
+    "version": "スタンダール 自称 当代随一の作家",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0012_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-22/310012001/"
+  },
+  "haruka": {
+    "version": "ハルカ 実りの導き手",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0019_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-19/310019001/"
+  },
+  "ukuu": {
+    "version": "ウクー 里の釣り少年",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0022_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-10/310022001/"
+  },
+  "baubau": {
+    "version": "バウバウ 元傭兵の木こり",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0026_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-7/310026001/"
+  },
+  "rei": {
+    "version": "レイ 知見求む貴族乙女",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0021_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-15/310021001/"
+  },
+  "pros": {
+    "version": "プロス 鋼鉄のからくり",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0029_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-2/310029001/"
+  },
+  "rien": {
+    "version": "リィエン 財宝求む貴族青年",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0020_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-12/310020001/"
+  },
+  "meshu": {
+    "version": "メーシュ 小さな巨匠",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0027_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-3/310027001/"
+  },
+  "safia": {
+    "version": "サフィア 報恩の狩人",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0028_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-20/310028001/"
+  },
+  "hero_soldier": {
+    "version": "主人公 欺装の帝国兵",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0001_002_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-23/310001002/"
+  },
+  "nije": {
+    "version": "ニージェ 凄腕の紋章師",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0009_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-14/310009001/"
+  },
+  "madeleine": {
+    "version": "マドレーヌ 奇抜な細工師",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0038_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-73/310038001/"
+  },
+  "avery": {
+    "version": "エイヴェリー 美の探求者",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0040_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-74/310040001/"
+  },
+  "mare": {
+    "version": "マーレ 万事億劫な人魚",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0034_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-77/310034001/"
+  },
+  "miuser": {
+    "version": "ミウサー 慈愛プリーストバニー",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0053_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-247/310053001/"
+  },
+  "gonoh": {
+    "version": "ゴンオウ 数百歳の大亀",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0023_001_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-11/310023001/"
+  },
+  "hero_school": {
+    "version": "主人公 学園の英傑",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0001_003_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-23/310001003/"
+  },
+  "diana": {
+    "version": "ディアナ 強きを追う鬼人",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0041_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-79/310041001/"
+  },
+  "vigdis": {
+    "version": "ヴィグディス 海に聴こえし女船長",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0030_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-26/310030001/"
+  },
+  "sojiro": {
+    "version": "ソウジロウ 名うての操舵手",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0031_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-27/310031001/"
+  },
+  "enra": {
+    "version": "エンラ 敏腕ドワーフ技師",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0042_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-195/310042001/"
+  },
+  "peter": {
+    "version": "ペーター 博識の元教師",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0037_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-167/310037001/"
+  },
+  "yume": {
+    "version": "ユメ 夢見せの少女",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0050_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-184/310050001/"
+  },
+  "ruarl": {
+    "version": "ルアール 塔の守り人",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0032_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-13/310032001/"
+  },
+  "hero_senkyo": {
+    "version": "主人公 仙郷の英雄",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0001_004_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-23/310001004/"
+  },
+  "hou_story": {
+    "version": "ホウ 奔放な父",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0002_001_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-5/310002002/"
+  },
+  "veil": {
+    "version": "ヴェイル 獣心の紋章使い",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0033_001_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-83/310033001/"
+  },
+  "bubu": {
+    "version": "ブブ お師母様第一",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0044_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-153/310044001/"
+  },
+  "tsubaki": {
+    "version": "ツバキ 業を越えし忍び",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0049_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-161/310049001/"
+  },
+  "rachana_story": {
+    "version": "ラチャナ センレン寺 総師範",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0043_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-152/310043001/"
+  },
+  "rihyo": {
+    "version": "リヒョウ キョーダイ",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0039_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-81/310039001/"
+  },
+  "leona_event": {
+    "version": "レオナ 赤紅の傭兵団長",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/2157_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-156/312157001/"
+  },
+  "romold": {
+    "version": "ロモルド 冷酷滅私",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0117_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-244/310117001/"
+  }
+}
