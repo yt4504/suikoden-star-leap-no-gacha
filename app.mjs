@@ -2,7 +2,7 @@ import {characters,characterById,displayName,acquisitionKind,acquisitionLabel} f
 import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState} from './model.mjs';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 import {joinsInFutureUpdate} from './availability.mjs?v=current-16';
-import {saveTeamImage} from './team-image.mjs?v=image-19';
+import {saveTeamImage} from './team-image.mjs?v=image-20';
 
 const STORAGE='star-leap-no-gacha-v1';
 const $=selector=>document.querySelector(selector);

@@ -17,10 +17,10 @@ export async function saveTeamImage(team) {
     catch{return [id,await loadImage(c.image)];}
   })));
   const canvas=document.createElement('canvas');
-  canvas.width=1120;canvas.height=1020;
+  canvas.width=1120;canvas.height=1000;
   const ctx=canvas.getContext('2d');
   if(!ctx)throw new Error('画像を作成できませんでした');
-  ctx.fillStyle='#15191e';ctx.fillRect(0,0,1120,1020);
+  ctx.fillStyle='#15191e';ctx.fillRect(0,0,1120,1000);
   ctx.fillStyle='#d4b77d';ctx.font=`18px ${font}`;ctx.fillText('STAR LEAP  ·  ガチャ縛り編成帳',42,48);
   ctx.fillStyle=ink;ctx.font=`bold 34px ${font}`;ctx.fillText(team.name||'編成',42,105,1030);
   if(team.tag){ctx.fillStyle='#ddc493';ctx.font=`19px ${font}`;ctx.fillText(team.tag,42,142,1030);}
@@ -40,11 +40,12 @@ export async function saveTeamImage(team) {
     ctx.strokeStyle=id?'#9b8059':'#515960';ctx.stroke();
     if(!id)return;
     const c=characterById.get(id);
-    portrait(c,x+(width-126)/2,y+12,126);
+    const size=height<200?88:126;
+    portrait(c,x+(width-size)/2,y+12,size);
     ctx.textAlign='center';ctx.fillStyle=ink;ctx.font=`bold 21px ${font}`;
-    ctx.fillText(displayName(c),x+width/2,y+164,width-18);
+    ctx.fillText(displayName(c),x+width/2,y+size+38,width-18);
     ctx.fillStyle='#c5c5bf';ctx.font=`16px ${font}`;
-    ctx.fillText(`${c.element} · ${c.role}`,x+width/2,y+195,width-18);
+    ctx.fillText(`${c.element} · ${c.role}`,x+width/2,y+size+69,width-18);
     ctx.textAlign='left';
   }
   function row(label,keys,y){
@@ -54,8 +55,8 @@ export async function saveTeamImage(team) {
   row('前列',['front1','front2','front3'],205);
   row('後列',['back1','back2','back3'],505);
   ctx.fillStyle='#e5c794';ctx.font=`bold 22px ${font}`;ctx.fillText('支援',42,785);
-  card(team.support,42,800,330,220);
-  if(team.note){ctx.fillStyle='#c6c4bd';ctx.font=`17px ${font}`;ctx.fillText(team.note.replace(/\s+/g,' ').slice(0,65),395,875,660);}
+  card(team.support,42,800,240,170);
+  if(team.note){ctx.fillStyle='#c6c4bd';ctx.font=`17px ${font}`;ctx.fillText(team.note.replace(/\s+/g,' ').slice(0,65),310,875,760);}
   const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
   if(!blob)throw new Error('画像を保存できませんでした');
   const url=URL.createObjectURL(blob),a=document.createElement('a');
