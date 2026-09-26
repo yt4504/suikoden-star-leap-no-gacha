@@ -245,3 +245,12 @@ footer{padding:20px 28px}
 .team-card h3{margin:0 0 7px;padding-left:4px;color:#e8cc9d;font:600 17px 'Shippori Mincho',serif}
 .add-team-bottom{width:100%;padding:13px}
 @media(max-width:800px){.team-card{scroll-margin-top:280px}}
+.team-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.team-card-head h3{margin:0}
+.save-image{padding:6px 10px;white-space:nowrap;color:#f0d298;border-color:#79674d}
+.team-layout .support-row{width:136px;max-width:136px;padding:7px}
+.team-layout .support-row .formation-heading{font-size:14px;margin-bottom:5px}
+.team-layout .support-row .formation-heading span{font-size:9px;margin-left:3px}
+.team-layout .support-row .slot{height:105px}
+.team-layout .support-row .slot .portrait{width:52px;height:52px}
+@media(max-width:600px){.team-layout .support-row{width:130px;max-width:130px}.team-layout .support-row .slot{height:102px}.team-layout .support-row .slot .portrait{width:48px;height:48px}}
