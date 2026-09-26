@@ -26,14 +26,20 @@ test('assigning a unit to another slot removes it from the first slot', () => {
   assert.throws(() => assignSlot(state, 0, 'unknown', 'hisui'));
 });
 
-test('assigned candidates are unavailable only in the currently selected team', () => {
+test('assigned candidates are unavailable across all formations until removed', () => {
   let state = addTeam(createState());
   state = assignSlot(state, 0, 'front1', 'hisui');
   state = assignSlot(state, 0, 'support', 'yua');
-  assert.deepEqual([...assignedUnitIds(state,0)].sort(), ['hisui','yua']);
-  assert.deepEqual([...assignedUnitIds(state,1)], []);
+  assert.deepEqual([...assignedUnitIds(state)].sort(), ['hisui','yua']);
+  assert.throws(() => assignSlot(state, 1, 'back1', 'hisui'), /別の編成/);
+  state = assignSlot(state, 1, 'back1', 'leona_event');
+  assert.deepEqual([...assignedUnitIds(state)].sort(), ['hisui','leona_event','yua']);
+  const olderSave=structuredClone(state);
+  olderSave.teams[1].front1='yua';
+  assert.equal(importState(exportState(olderSave)).teams[1].front1,'yua');
   state = assignSlot(state, 0, 'front1', null);
-  assert.deepEqual([...assignedUnitIds(state,0)], ['yua']);
+  assert.deepEqual([...assignedUnitIds(state)].sort(), ['leona_event','yua']);
+  assert.equal(assignSlot(state, 1, 'back2', 'hisui').teams[1].back2,'hisui');
 });
 
 test('teams remain independent and imports reject malformed or gacha-only ids without replacing state', () => {
