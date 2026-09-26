@@ -1,5 +1,5 @@
 import {characters,characterById,displayName,acquisitionKind,acquisitionLabel} from './characters.mjs?v=sources-17';
-import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState,assignedUnitIds} from './model.mjs?v=assigned-21';
+import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState,assignedUnitIds} from './model.mjs?v=global-22';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 import {joinsInFutureUpdate} from './availability.mjs?v=current-16';
 import {saveTeamImage} from './team-image.mjs?v=image-20';
@@ -30,12 +30,12 @@ function renderTeams() {
 }
 function renderCandidates() {
   const list=characters.filter(c=>(candidateFilters.element==='all'||c.element===candidateFilters.element)&&(candidateFilters.source==='all'||acquisitionKind(c)===candidateFilters.source)&&c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
-  const assigned=assignedUnitIds(state,teamIndex);
+  const assigned=assignedUnitIds(state);
   $('#candidate-title').textContent='仲間一覧';
   $('#candidate-sources').innerHTML=sourceOptions.map(([value,label])=>`<button type="button" data-source="${value}" aria-pressed="${candidateFilters.source===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>acquisitionKind(c)===value).length}</span></button>`).join('');
   $('#candidate-elements').innerHTML=[['all','全員'],...elements.map(e=>[e,e])].map(([value,label])=>`<button type="button" data-element="${value}" aria-pressed="${candidateFilters.element===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>c.element===value).length}</span></button>`).join('');
   $('#candidate-count').textContent=`${list.length}人`;
-  const card=c=>{const future=joinsInFutureUpdate(c.id),used=assigned.has(c.id),kind=acquisitionKind(c),label=acquisitionLabel(c);return `<button class="candidate${future?' future':''}${used?' assigned':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" ${used?'disabled':`data-drag-unit="${c.id}"`} data-role="${c.role}" data-acquisition="${kind}" aria-label="${esc(c.name)}、${label}${future?'（今回の更新では加入不可）':''}${used?'、この編成に配置済み':'を選ぶ'}" ${used?'title="この編成に配置済み"':`aria-pressed="${selection.unitId===c.id}"`}>${portrait(c,true)}<span class="acquisition-badge">${label}</span><span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;};
+  const card=c=>{const future=joinsInFutureUpdate(c.id),used=assigned.has(c.id),kind=acquisitionKind(c),label=acquisitionLabel(c);return `<button class="candidate${future?' future':''}${used?' assigned':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" ${used?'disabled':`data-drag-unit="${c.id}"`} data-role="${c.role}" data-acquisition="${kind}" aria-label="${esc(c.name)}、${label}${future?'（今回の更新では加入不可）':''}${used?'、編成に配置済み':'を選ぶ'}" ${used?'title="編成に配置済み"':`aria-pressed="${selection.unitId===c.id}"`}>${portrait(c,true)}<span class="acquisition-badge">${label}</span><span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;};
   $('#candidate-list').innerHTML=elements.map(element=>{
     const members=list.filter(c=>c.element===element).sort((a,b)=>roleOrder.indexOf(a.role)-roleOrder.indexOf(b.role));
     return members.length?`<section class="candidate-group" data-element="${element}" aria-label="${element}属性"><div class="candidate-group-head"><strong>${element}属性</strong><small>${members.length}人</small></div>${members.map(card).join('')}</section>`:'';
@@ -54,7 +54,7 @@ document.addEventListener('click',e=>{
     if(b.id==='add-team'){teamIndex=state.teams.length;selection={unitId:null,slot:null};persist(addTeam(state));$('#team-editor .team-card:last-of-type')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
     if(b.dataset.clearSlot){const index=Number(b.closest('.team-card').dataset.teamIndex);selection={unitId:null,slot:null};teamIndex=index;persist(assignSlot(state,index,b.dataset.clearSlot,null));return;}
     if(b.dataset.slot){const index=Number(b.closest('.team-card').dataset.teamIndex);if(index!==teamIndex)selection.slot=null;teamIndex=index;const result=chooseSlot(selection,b.dataset.slot);selection=result.selection;if(result.placement)persist(assignSlot(state,index,result.placement.slot,result.placement.unitId));else renderTeams();return;}
-    if(b.dataset.pick){if(assignedUnitIds(state,teamIndex).has(b.dataset.pick))return;const result=chooseCandidate(selection,b.dataset.pick);selection=result.selection;if(result.placement)persist(assignSlot(state,teamIndex,result.placement.slot,result.placement.unitId));else renderTeams();return;}
+    if(b.dataset.pick){if(assignedUnitIds(state).has(b.dataset.pick))return;const result=chooseCandidate(selection,b.dataset.pick);selection=result.selection;if(result.placement)persist(assignSlot(state,teamIndex,result.placement.slot,result.placement.unitId));else renderTeams();return;}
     if(b.hasAttribute('data-delete-team')){const index=Number(b.closest('.team-card').dataset.teamIndex);if(confirm('この編成を削除しますか？')){selection={unitId:null,slot:null};teamIndex=Math.min(index,state.teams.length-2);persist(deleteTeam(state,index));}return;}
     if(b.hasAttribute('data-save-image')){const index=Number(b.closest('.team-card').dataset.teamIndex);saveTeamImage(state.teams[index]).then(()=>flash('編成画像を保存しました')).catch(err=>flash(err.message,true));return;}
   }catch(err){flash(err.message,true);}
@@ -82,7 +82,7 @@ document.addEventListener('pointerup',e=>{
   document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));
   suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
   const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-slot]');
-  if(target&&characterById.has(finished.id)){teamIndex=Number(target.closest('.team-card').dataset.teamIndex);selection={unitId:null,slot:null};persist(assignSlot(state,teamIndex,target.dataset.slot,finished.id));}
+  if(target&&characterById.has(finished.id)){try{teamIndex=Number(target.closest('.team-card').dataset.teamIndex);selection={unitId:null,slot:null};persist(assignSlot(state,teamIndex,target.dataset.slot,finished.id));}catch(err){flash(err.message,true);}}
 });
 document.addEventListener('pointercancel',()=>{drag?.ghost?.remove();drag=null;document.body.classList.remove('dragging-unit');document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));});
 render();

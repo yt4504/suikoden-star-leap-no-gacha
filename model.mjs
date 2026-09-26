@@ -1,7 +1,7 @@
 import { characterById } from './characters.mjs';
 
 export const slots = ['front1','front2','front3','back1','back2','back3','support'];
-export const assignedUnitIds = (state,index) => new Set(slots.map(slot=>state.teams[index]?.[slot]).filter(Boolean));
+export const assignedUnitIds = state => new Set(state.teams.flatMap(team=>slots.map(slot=>team[slot])).filter(Boolean));
 const storageVersion = 1;
 export const newTeam = (number = 1) => ({id: crypto.randomUUID(),name:`編成 ${number}`,tag:'',note:'',...Object.fromEntries(slots.map(s=>[s,null]))});
 export const createState = () => ({version:storageVersion,units:{},teams:[newTeam()]});
@@ -24,7 +24,10 @@ export function setUnitTags(state,id,tags) {
 export function normalizeTags(value) { return String(value).split(/[,、\n]/).map(v=>v.trim()).filter(Boolean).slice(0,8).map(v=>v.slice(0,24)).join('、'); }
 export function assignSlot(state,teamIndex,slot,id) {
   if(!slots.includes(slot)||!state.teams[teamIndex]) throw new Error('編成枠が見つかりません');
-  if(id!==null) validId(id);
+  if(id!==null) {
+    validId(id);
+    if(state.teams.some((team,index)=>index!==teamIndex&&slots.some(key=>team[key]===id))) throw new Error('このキャラは別の編成で使用中です');
+  }
   const next=copy(state),team=next.teams[teamIndex];
   if(id!==null) for(const s of slots) if(team[s]===id) team[s]=null;
   team[slot]=id; return next;
