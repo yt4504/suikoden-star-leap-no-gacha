@@ -254,3 +254,8 @@ footer{padding:20px 28px}
 .team-layout .support-row .slot{height:105px}
 .team-layout .support-row .slot .portrait{width:52px;height:52px}
 @media(max-width:600px){.team-layout .support-row{width:130px;max-width:130px}.team-layout .support-row .slot{height:102px}.team-layout .support-row .slot .portrait{width:48px;height:48px}}
+.team-card.active .team-editor{border-color:#a48a5d}
+.candidate.assigned:disabled{opacity:1;cursor:not-allowed;border-color:#464a4d;background:#272b2e;color:#999}
+.candidate.assigned .portrait{filter:grayscale(1) brightness(.55)}
+.candidate.assigned .candidate-info,.candidate.assigned .acquisition-badge{filter:grayscale(1);opacity:.6}
+.candidate.assigned:hover{transform:none;border-color:#464a4d;background:#272b2e}

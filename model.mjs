@@ -1,6 +1,7 @@
 import { characterById } from './characters.mjs';
 
 export const slots = ['front1','front2','front3','back1','back2','back3','support'];
+export const assignedUnitIds = (state,index) => new Set(slots.map(slot=>state.teams[index]?.[slot]).filter(Boolean));
 const storageVersion = 1;
 export const newTeam = (number = 1) => ({id: crypto.randomUUID(),name:`編成 ${number}`,tag:'',note:'',...Object.fromEntries(slots.map(s=>[s,null]))});
 export const createState = () => ({version:storageVersion,units:{},teams:[newTeam()]});
