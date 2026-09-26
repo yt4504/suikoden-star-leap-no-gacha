@@ -238,3 +238,10 @@ footer{padding:20px 28px}
 .candidate[data-acquisition="mission"] .acquisition-badge{border-color:#87ba9c;color:#c9f2d6}
 .planner-only .candidate-list{max-height:calc(100vh - 272px)}
 @media(max-width:800px){.planner-only .candidate-list{max-height:none}.acquisition-badge{font-size:9px}}
+
+/* Saved formations grow down the right column, sharing the left roster. */
+.planner-only #team-editor{display:grid;gap:16px;align-content:start}
+.team-card{min-width:0;scroll-margin-top:12px}
+.team-card h3{margin:0 0 7px;padding-left:4px;color:#e8cc9d;font:600 17px 'Shippori Mincho',serif}
+.add-team-bottom{width:100%;padding:13px}
+@media(max-width:800px){.team-card{scroll-margin-top:280px}}

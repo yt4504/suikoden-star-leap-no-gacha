@@ -19,10 +19,10 @@ const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:$
 function renderTeams() {
   const candidateScroll=$('#candidate-list').scrollTop,candidateX=$('#candidate-list').scrollLeft;
   if(teamIndex>=state.teams.length) teamIndex=state.teams.length-1;
-  $('#team-tabs').innerHTML=state.teams.map((t,i)=>`<button class="${i===teamIndex?'active':''}" data-team="${i}">${esc(t.name||`編成 ${i+1}`)}</button>`).join('');
-  const t=state.teams[teamIndex];
-  const slot=(key,label)=>{const c=characterById.get(t[key]),future=c&&joinsInFutureUpdate(c.id);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${future?' future':''}${selection.slot===key?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}" data-role="${c.role}"`:''} aria-label="${label}${c?' '+c.name:' 空き'}${future?'（今回の更新では加入不可）':''}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
-  $('#team-editor').innerHTML=`<div class="team-editor"><div class="team-fields"><label>編成名<input id="team-name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input id="team-tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" id="delete-team" ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea id="team-note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,i)=>slot(s,`前列 ${i+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,i)=>slot(s,`後列 ${i+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div>`;
+  $('#team-editor').innerHTML=state.teams.map((t,i)=>{
+    const slot=(key,label)=>{const c=characterById.get(t[key]),future=c&&joinsInFutureUpdate(c.id);return `<div class="slot-wrap"><button class="slot${c?' filled':''}${future?' future':''}${selection.slot===key&&teamIndex===i?' selected':''}" data-slot="${key}" ${c?`data-drag-unit="${c.id}" data-role="${c.role}"`:''} aria-label="${esc(t.name)} ${label}${c?' '+c.name:' 空き'}${future?'（今回の更新では加入不可）':''}">${c?portrait(c,true):'<span class="slot-icon">＋</span>'}<strong>${c?esc(displayName(c)):label}</strong>${c?`<small>${c.element} · ${c.role}</small>`:'<small>タップして選ぶ</small>'}</button>${c?`<button class="remove-slot" data-clear-slot="${key}" aria-label="${esc(t.name)} ${label}から${esc(c.name)}を外す" title="枠を空ける">×</button>`:''}</div>`};
+    return `<section class="team-card" data-team-index="${i}" aria-label="${esc(t.name||`編成 ${i+1}`)}"><h3>${esc(t.name||`編成 ${i+1}`)}</h3><div class="team-editor"><div class="team-fields"><label>編成名<input data-field="name" maxlength="60" value="${esc(t.name)}"></label><label>攻略タグ<input data-field="tag" maxlength="60" value="${esc(t.tag)}" placeholder="例：討伐HARD4"></label><button class="danger" data-delete-team ${state.teams.length===1?'disabled':''}>編成を削除</button></div><label class="team-note">攻略メモ<textarea data-field="note" maxlength="300" placeholder="役割分担や立ち回りのメモ">${esc(t.note)}</textarea></label><div class="formation"><div class="formation-group"><div class="formation-heading">前列 <span>FRONT LINE</span></div><div class="slot-grid">${['front1','front2','front3'].map((s,n)=>slot(s,`前列 ${n+1}`)).join('')}</div></div><div class="formation-group"><div class="formation-heading">後列 <span>BACK LINE</span></div><div class="slot-grid">${['back1','back2','back3'].map((s,n)=>slot(s,`後列 ${n+1}`)).join('')}</div></div></div><div class="formation-group support-row"><div class="formation-heading">支援 <span>SUPPORT</span></div>${slot('support','支援 1')}</div></div></section>`;
+  }).join('')+'<button id="add-team" class="primary add-team-bottom">＋ 編成を追加</button>';
   renderCandidates();
   $('#candidate-list').scrollTop=candidateScroll;
   $('#candidate-list').scrollLeft=candidateX;
@@ -47,19 +47,18 @@ document.addEventListener('click',e=>{
   try {
     if(b.dataset.element){candidateFilters.element=b.dataset.element;$('#candidate-list').scrollTop=0;renderCandidates();return;}
     if(b.dataset.source){candidateFilters.source=b.dataset.source;$('#candidate-list').scrollTop=0;renderCandidates();return;}
-    if(b.id==='add-team'){persist(addTeam(state));teamIndex=state.teams.length-1;render();return;}
-    if(b.dataset.team){teamIndex=Number(b.dataset.team);selection={unitId:null,slot:null};render();return;}
-    if(b.dataset.clearSlot){persist(assignSlot(state,teamIndex,b.dataset.clearSlot,null));selection={unitId:null,slot:null};return;}
-    if(b.dataset.slot){const result=chooseSlot(selection,b.dataset.slot);selection=result.selection;if(result.placement)persist(assignSlot(state,teamIndex,result.placement.slot,result.placement.unitId));else renderTeams();return;}
+    if(b.id==='add-team'){teamIndex=state.teams.length;selection={unitId:null,slot:null};persist(addTeam(state));$('#team-editor .team-card:last-of-type')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
+    if(b.dataset.clearSlot){const index=Number(b.closest('.team-card').dataset.teamIndex);selection={unitId:null,slot:null};teamIndex=index;persist(assignSlot(state,index,b.dataset.clearSlot,null));return;}
+    if(b.dataset.slot){const index=Number(b.closest('.team-card').dataset.teamIndex);if(index!==teamIndex)selection.slot=null;teamIndex=index;const result=chooseSlot(selection,b.dataset.slot);selection=result.selection;if(result.placement)persist(assignSlot(state,index,result.placement.slot,result.placement.unitId));else renderTeams();return;}
     if(b.dataset.pick){const result=chooseCandidate(selection,b.dataset.pick);selection=result.selection;if(result.placement)persist(assignSlot(state,teamIndex,result.placement.slot,result.placement.unitId));else renderTeams();return;}
-    if(b.id==='delete-team'){if(confirm('この編成を削除しますか？')){persist(deleteTeam(state,teamIndex));selection={unitId:null,slot:null};render();}return;}
+    if(b.hasAttribute('data-delete-team')){const index=Number(b.closest('.team-card').dataset.teamIndex);if(confirm('この編成を削除しますか？')){selection={unitId:null,slot:null};teamIndex=Math.min(index,state.teams.length-2);persist(deleteTeam(state,index));}return;}
     if(b.id==='export'){const blob=new Blob([exportState(state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`star-leap-no-gacha-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);flash('JSONを保存しました');return;}
     if(b.id==='import'){$('#file').click();return;}
   }catch(err){flash(err.message,true);}
 });
 document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;if(candidateFilters.search)candidateFilters.element='all';renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
 document.addEventListener('change',e=>{
-  if(['team-name','team-tag','team-note'].includes(e.target.id)){const k={'team-name':'name','team-tag':'tag','team-note':'note'}[e.target.id];persist(updateTeam(state,teamIndex,{[k]:e.target.value}));}
+  if(e.target.dataset.field){const index=Number(e.target.closest('.team-card').dataset.teamIndex);persist(updateTeam(state,index,{[e.target.dataset.field]:e.target.value}));}
 });
 $('#file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const incoming=importState(await file.text());persist(incoming);teamIndex=0;selection={unitId:null,slot:null};flash('JSONを読み込みました');}catch(err){flash(`読み込み失敗：${err.message}`,true);}finally{e.target.value='';}});
 for(const role of [...new Set(characters.map(c=>c.role))]){const option=document.createElement('option');option.value=role;option.textContent=role;$('#candidate-role').append(option);}
@@ -81,7 +80,7 @@ document.addEventListener('pointerup',e=>{
   document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));
   suppressClick=true;setTimeout(()=>{suppressClick=false;},0);
   const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-slot]');
-  if(target&&characterById.has(finished.id)){selection={unitId:null,slot:null};persist(assignSlot(state,teamIndex,target.dataset.slot,finished.id));}
+  if(target&&characterById.has(finished.id)){teamIndex=Number(target.closest('.team-card').dataset.teamIndex);selection={unitId:null,slot:null};persist(assignSlot(state,teamIndex,target.dataset.slot,finished.id));}
 });
 document.addEventListener('pointercancel',()=>{drag?.ghost?.remove();drag=null;document.body.classList.remove('dragging-unit');document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));});
 render();
