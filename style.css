@@ -224,3 +224,17 @@ footer{padding:20px 28px}
 .candidate.future .candidate-role,.planner-only .slot.future[data-role] small{background:#52565a!important;color:#d0d1d1!important}
 .candidate.future:hover{border-color:#9b9da0;background:#303437}
 .planner-only .slot.future.filled[data-role]{border-color:#686c70;color:#b8bbbd;background:#282c2e}
+
+/* Acquisition is independent of element and combat role. */
+.candidate-sources{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:5px}
+.candidate-sources button{background:#292e34;border:1px solid #52575a;border-radius:4px;color:#e4e0d8;font-size:12px;padding:5px 9px}
+.candidate-sources button[aria-pressed="true"]{background:#594a32;border-color:#d6ad6b;color:#ffe4ad}
+.candidate-sources button span{margin-left:4px;color:#c4c2bd;font-size:11px}
+.candidate-sources button[aria-pressed="true"] span{color:#f1d5a0}
+.candidate{position:relative}
+.acquisition-badge{position:absolute;right:2px;top:5px;z-index:1;padding:2px 4px;border:1px solid #b8a06d;border-radius:3px;background:#292c2de6;color:#f6dfad;font-size:10px;font-weight:700;line-height:1.2;white-space:nowrap;pointer-events:none}
+.candidate[data-acquisition="event"] .acquisition-badge{border-color:#ae85c7;color:#eac8ff}
+.candidate[data-acquisition="exchange"] .acquisition-badge{border-color:#7eafd1;color:#c9e6fa}
+.candidate[data-acquisition="mission"] .acquisition-badge{border-color:#87ba9c;color:#c9f2d6}
+.planner-only .candidate-list{max-height:calc(100vh - 272px)}
+@media(max-width:800px){.planner-only .candidate-list{max-height:none}.acquisition-badge{font-size:9px}}

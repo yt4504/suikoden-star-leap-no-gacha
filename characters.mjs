@@ -40,7 +40,7 @@ const rows = [
   ['yume','ユメ','水','智','攻手','mission'],
   ['ruarl','ルアール','雷','智','攻手','mission'],
   ['hero_senkyo','主人公（仙郷の英雄）','火','智','攻手','exchange'],
-  ['hou_story','ホウ（奔放な父）','火','智','攻手','story'],
+  ['hou_story','ホウ（奔放な父）','水','剣','攻手','story'],
   ['veil','ヴェイル','雷','闘','補助','story'],
   ['bubu','ブブ','火','闘','攻手','story'],
   ['tsubaki','ツバキ','火','剣','攻手','story'],
@@ -62,3 +62,8 @@ export const characters = rows.map(([id,name,element,weapon,role,source]) => Obj
 export const characterById = new Map(characters.map(c => [c.id,c]));
 // Keep the full version name in the catalog for save IDs and accessible labels.
 export const displayName = character => character.id === 'hisui_mission' ? 'SSRヒスイ' : character.name.replace(/（[^）]*）$/, '');
+// Exchange outfits and event rewards stay distinct from the 108-star group.
+export const acquisitionKind = character => character.source === 'exchange' ? 'exchange'
+  : character.source === 'event' ? 'event'
+  : character.id === 'hisui_mission' ? 'mission' : 'star';
+export const acquisitionLabel = character => ({star:'108星',exchange:'コイン交換',event:'イベント限定',mission:'ミッション配布'})[acquisitionKind(character)];
