@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, setOwned, setLimitBreak, assignSlot, addTeam, exportState, importState } from '../model.mjs';
+import { createState, setOwned, setLimitBreak, assignSlot, addTeam, exportState, importState, assignedUnitIds } from '../model.mjs';
 import { characters } from '../characters.mjs';
 
 test('catalog only contains unique, explicitly confirmed non-gacha units', () => {
@@ -24,6 +24,16 @@ test('assigning a unit to another slot removes it from the first slot', () => {
   assert.equal(state.teams[0].front1, null);
   assert.equal(state.teams[0].support, 'hisui');
   assert.throws(() => assignSlot(state, 0, 'unknown', 'hisui'));
+});
+
+test('assigned candidates are unavailable only in the currently selected team', () => {
+  let state = addTeam(createState());
+  state = assignSlot(state, 0, 'front1', 'hisui');
+  state = assignSlot(state, 0, 'support', 'yua');
+  assert.deepEqual([...assignedUnitIds(state,0)].sort(), ['hisui','yua']);
+  assert.deepEqual([...assignedUnitIds(state,1)], []);
+  state = assignSlot(state, 0, 'front1', null);
+  assert.deepEqual([...assignedUnitIds(state,0)], ['yua']);
 });
 
 test('teams remain independent and imports reject malformed or gacha-only ids without replacing state', () => {
