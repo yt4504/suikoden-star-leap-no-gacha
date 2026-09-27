@@ -236,6 +236,7 @@ footer{padding:20px 28px}
 .candidate[data-acquisition="event"] .acquisition-badge{border-color:#ae85c7;color:#eac8ff}
 .candidate[data-acquisition="exchange"] .acquisition-badge{border-color:#7eafd1;color:#c9e6fa}
 .candidate[data-acquisition="mission"] .acquisition-badge{border-color:#87ba9c;color:#c9f2d6}
+.candidate[data-acquisition="tutorial"] .acquisition-badge{border-color:#dfa478;color:#ffe0c4}
 .planner-only .candidate-list{max-height:calc(100vh - 272px)}
 @media(max-width:800px){.planner-only .candidate-list{max-height:none}.acquisition-badge{font-size:9px}}
 

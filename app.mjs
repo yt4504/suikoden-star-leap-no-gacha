@@ -1,4 +1,4 @@
-import {characters,characterById,displayName,acquisitionKind,acquisitionLabel} from './characters.mjs?v=sources-17';
+import {characters,characterById,displayName,acquisitionKind,acquisitionLabel} from './characters.mjs?v=kuromimi-23';
 import {createState,assignSlot,addTeam,deleteTeam,updateTeam,exportState,importState,assignedUnitIds} from './model.mjs?v=global-22';
 import {chooseCandidate,chooseSlot} from './team-selection.mjs';
 import {joinsInFutureUpdate} from './availability.mjs?v=current-16';
@@ -13,7 +13,7 @@ let teamIndex=0,selection={unitId:null,slot:null};
 const elements=[...new Set(characters.map(c=>c.element))];
 const roleOrder=['攻手','守護','回復','補助'];
 const candidateFilters={search:'',role:'all',element:'all',source:'all'};
-const sourceOptions=[['all','すべて'],['star','108星'],['event','イベント限定'],['exchange','コイン交換'],['mission','ミッション配布']];
+const sourceOptions=[['all','すべて'],['star','108星'],['event','イベント限定'],['exchange','コイン交換'],['mission','ミッション配布'],['tutorial','チュートリアル確定']];
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
 const portrait=(c,large=false)=>{const crop=c.crop,style=large?` style="--zoom:${(204800/crop.width).toFixed(3)}%;--left:${(-100*crop.x/crop.width).toFixed(3)}%;--top:${(-100*crop.y/crop.width).toFixed(3)}%"`:'';return `<span class="portrait${large?' high-res':''}">${esc(c.name[0])}<img src="${esc(large?c.largeImage:c.image)}" alt="" loading="lazy" draggable="false"${style} onerror="this.remove()"></span>`;};

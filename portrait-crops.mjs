@@ -1,5 +1,6 @@
 // Crops locate each 128px icon within its 2048px illustration.
 export const portraitCrops = Object.freeze({
+  "kuromimi": {"x": 610, "y": 170, "width": 580},
   "saiga": {
     "x": 790,
     "y": 135,

@@ -1,9 +1,10 @@
 // Only deterministic, non-gacha character versions. See SOURCES.md for verification.
-import {portraitCrops} from './portrait-crops.mjs?v=additions-12';
+import {portraitCrops} from './portrait-crops.mjs?v=kuromimi-23';
 const rows = [
   ['hero','主人公（里長の子）','風','闘','攻手','story'],
   ['hisui','ヒスイ（屋敷の使用人）','風','智','回復','story'],
   ['hisui_mission','ヒスイ（秘められし力）','風','智','回復','mission'],
+  ['kuromimi','クロミミ（コボルト村の英雄）','火','剣','守護','tutorial'],
   ['shirin','シーリーン（幼馴染の討伐娘）','風','剣','攻手','story'],
   ['shapur','シャプール（里長の右腕）','水','闘','攻手','story'],
   ['viki','ビッキー（瞬きの魔法少女）','雷','智','攻手','story'],
@@ -65,5 +66,6 @@ export const displayName = character => character.id === 'hisui_mission' ? 'SSR�
 // Exchange outfits and event rewards stay distinct from the 108-star group.
 export const acquisitionKind = character => character.source === 'exchange' ? 'exchange'
   : character.source === 'event' ? 'event'
-  : character.id === 'hisui_mission' ? 'mission' : 'star';
-export const acquisitionLabel = character => ({star:'108星',exchange:'コイン交換',event:'イベント限定',mission:'ミッション配布'})[acquisitionKind(character)];
+  : character.id === 'hisui_mission' ? 'mission'
+  : character.source === 'tutorial' ? 'tutorial' : 'star';
+export const acquisitionLabel = character => ({star:'108星',exchange:'コイン交換',event:'イベント限定',mission:'ミッション配布',tutorial:'チュートリアル確定'})[acquisitionKind(character)];

@@ -1,4 +1,4 @@
-import {characterById,displayName} from './characters.mjs?v=sources-17';
+import {characterById,displayName} from './characters.mjs?v=kuromimi-23';
 
 const font='"Noto Sans JP", sans-serif';
 const ink='#f0ece4';
