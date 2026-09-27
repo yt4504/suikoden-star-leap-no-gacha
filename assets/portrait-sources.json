@@ -298,5 +298,11 @@
     "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0004_001_faceicon00.png",
     "detail": "https://playershi.com/gensuisp/character/character-24/310004002/",
     "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/0004_001_fullbody00_00.webp"
+  },
+  "kuromimi": {
+    "version": "クロミミ コボルト村の英雄",
+    "image": "https://playershi.com/wp-content/uploads/suikoden-sp-character/2089_000_faceicon00.png",
+    "detail": "https://playershi.com/gensuisp/character/character-69/312089001/",
+    "fullbody": "https://playershi.com/wp-content/uploads/suikoden-sp-character/2089_000_fullbody00_00.webp"
   }
 }
