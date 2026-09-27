@@ -11,14 +11,15 @@ test('cards show only the character name while distinct versions retain separate
   assert.equal(displayName(characters.find(c => c.id === 'leona_event')), 'レオナ');
 });
 
-test('all 47 listed 108-star versions and three guaranteed rewards have distinct acquisition labels', () => {
-  assert.deepEqual(Object.fromEntries(['star','exchange','event','mission'].map(kind=>[
+test('all 47 listed 108-star versions and four guaranteed rewards have distinct acquisition labels', () => {
+  assert.deepEqual(Object.fromEntries(['star','exchange','event','mission','tutorial'].map(kind=>[
     kind,characters.filter(c=>acquisitionKind(c)===kind).length
-  ])),{star:44,exchange:3,event:2,mission:1});
+  ])),{star:44,exchange:3,event:2,mission:1,tutorial:1});
   assert.equal(acquisitionLabel(characters.find(c=>c.id==='gonoh')),'108星');
   assert.equal(acquisitionLabel(characters.find(c=>c.id==='hero_senkyo')),'コイン交換');
   assert.equal(acquisitionLabel(characters.find(c=>c.id==='hisui_mission')),'ミッション配布');
   assert.equal(acquisitionLabel(characters.find(c=>c.id==='romold')),'イベント限定');
+  assert.equal(acquisitionLabel(characters.find(c=>c.id==='kuromimi')),'チュートリアル確定');
 });
 
 test('story Hou has the water and sword attributes of the guaranteed 108-star version', () => {

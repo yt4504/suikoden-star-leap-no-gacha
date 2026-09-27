@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { createState, setOwned, setLimitBreak, assignSlot, addTeam, exportState, importState, assignedUnitIds } from '../model.mjs';
 import { characters } from '../characters.mjs';
 
-test('catalog only contains unique, explicitly confirmed non-gacha units', () => {
+test('catalog only contains unique, explicitly confirmed guaranteed units', () => {
   assert.ok(characters.length >= 35);
   assert.equal(new Set(characters.map(c => c.id)).size, characters.length);
-  assert.ok(characters.every(c => c.confirmed === true && ['story','star','event','exchange','mission'].includes(c.source)));
+  assert.ok(characters.every(c => c.confirmed === true && ['story','star','event','exchange','mission','tutorial'].includes(c.source)));
   assert.ok(characters.some(c => c.name === 'ロモルド' && c.source === 'event'));
   assert.ok(!characters.some(c => c.name === 'レパント'));
 });
