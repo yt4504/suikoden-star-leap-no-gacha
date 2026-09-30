@@ -12,7 +12,7 @@ try { state=importState(localStorage.getItem(STORAGE)); } catch { state=createSt
 let teamIndex=0,selection={unitId:null,slot:null};
 const elements=[...new Set(characters.map(c=>c.element))];
 const roleOrder=['攻手','守護','回復','補助'];
-const candidateFilters={search:'',role:'all',element:'all',source:'all'};
+const candidateFilters={search:'',role:'all',element:'all',weapon:'all',source:'all'};
 const sourceOptions=[['all','すべて'],['star','108星'],['event','イベント限定'],['exchange','コイン交換'],['mission','ミッション配布'],['tutorial','チュートリアル確定']];
 const persist=next=>{state=next;localStorage.setItem(STORAGE,exportState(state));render();};
 function flash(message,error=false) {const el=$('#flash');el.textContent=message;el.className=`flash show${error?' error':''}`;setTimeout(()=>el.classList.remove('show'),4500);}
@@ -29,13 +29,13 @@ function renderTeams() {
   $('#candidate-list').scrollLeft=candidateX;
 }
 function renderCandidates() {
-  const list=characters.filter(c=>(candidateFilters.element==='all'||c.element===candidateFilters.element)&&(candidateFilters.source==='all'||acquisitionKind(c)===candidateFilters.source)&&c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
+  const list=characters.filter(c=>(candidateFilters.weapon==='all'||c.weapon===candidateFilters.weapon)&&(candidateFilters.element==='all'||c.element===candidateFilters.element)&&(candidateFilters.source==='all'||acquisitionKind(c)===candidateFilters.source)&&c.name.toLocaleLowerCase().includes(candidateFilters.search.toLocaleLowerCase())&&(candidateFilters.role==='all'||c.role===candidateFilters.role));
   const assigned=assignedUnitIds(state);
   $('#candidate-title').textContent='仲間一覧';
   $('#candidate-sources').innerHTML=sourceOptions.map(([value,label])=>`<button type="button" data-source="${value}" aria-pressed="${candidateFilters.source===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>acquisitionKind(c)===value).length}</span></button>`).join('');
   $('#candidate-elements').innerHTML=[['all','全員'],...elements.map(e=>[e,e])].map(([value,label])=>`<button type="button" data-element="${value}" aria-pressed="${candidateFilters.element===value}">${label}<span>${value==='all'?characters.length:characters.filter(c=>c.element===value).length}</span></button>`).join('');
   $('#candidate-count').textContent=`${list.length}人`;
-  const card=c=>{const future=joinsInFutureUpdate(c.id),used=assigned.has(c.id),kind=acquisitionKind(c),label=acquisitionLabel(c);return `<button class="candidate${future?' future':''}${used?' assigned':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" ${used?'disabled':`data-drag-unit="${c.id}"`} data-role="${c.role}" data-acquisition="${kind}" aria-label="${esc(c.name)}、${label}${future?'（今回の更新では加入不可）':''}${used?'、編成に配置済み':'を選ぶ'}" ${used?'title="編成に配置済み"':`aria-pressed="${selection.unitId===c.id}"`}>${portrait(c,true)}<span class="acquisition-badge">${label}</span><span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.role}</small></span></button>`;};
+  const card=c=>{const future=joinsInFutureUpdate(c.id),used=assigned.has(c.id),kind=acquisitionKind(c),label=acquisitionLabel(c);return `<button class="candidate${future?' future':''}${used?' assigned':''}${selection.unitId===c.id?' selected':''}" data-pick="${c.id}" ${used?'disabled':`data-drag-unit="${c.id}"`} data-role="${c.role}" data-acquisition="${kind}" aria-label="${esc(c.name)}、${label}${future?'（今回の更新では加入不可）':''}${used?'、編成に配置済み':'を選ぶ'}" ${used?'title="編成に配置済み"':`aria-pressed="${selection.unitId===c.id}"`}>${portrait(c,true)}<span class="acquisition-badge">${label}</span><span class="candidate-info"><strong>${esc(displayName(c))}</strong><small class="candidate-role">${c.weapon} · ${c.role}</small></span></button>`;};
   $('#candidate-list').innerHTML=elements.map(element=>{
     const members=list.filter(c=>c.element===element).sort((a,b)=>roleOrder.indexOf(a.role)-roleOrder.indexOf(b.role));
     return members.length?`<section class="candidate-group" data-element="${element}" aria-label="${element}属性"><div class="candidate-group-head"><strong>${element}属性</strong><small>${members.length}人</small></div>${members.map(card).join('')}</section>`:'';
@@ -59,7 +59,7 @@ document.addEventListener('click',e=>{
     if(b.hasAttribute('data-save-image')){const index=Number(b.closest('.team-card').dataset.teamIndex);saveTeamImage(state.teams[index]).then(()=>flash('編成画像を保存しました')).catch(err=>flash(err.message,true));return;}
   }catch(err){flash(err.message,true);}
 });
-document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;if(candidateFilters.search)candidateFilters.element='all';renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}});
+document.addEventListener('input',e=>{if(e.target.id==='candidate-search'){candidateFilters.search=e.target.value;if(candidateFilters.search)candidateFilters.element='all';renderCandidates();}if(e.target.id==='candidate-role'){candidateFilters.role=e.target.value;renderCandidates();}if(e.target.id==='candidate-weapon'){candidateFilters.weapon=e.target.value;$('#candidate-list').scrollTop=0;renderCandidates();}});
 document.addEventListener('change',e=>{
   if(e.target.dataset.field){const index=Number(e.target.closest('.team-card').dataset.teamIndex);persist(updateTeam(state,index,{[e.target.dataset.field]:e.target.value}));}
 });
