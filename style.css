@@ -261,6 +261,6 @@ footer{padding:20px 28px}
 .candidate.assigned .candidate-info,.candidate.assigned .acquisition-badge{filter:grayscale(1);opacity:.6}
 .candidate.assigned:hover{transform:none;border-color:#464a4d;background:#272b2e}
 
-/* Combine role and weapon filters without widening the candidate panel. */
-.planner-only .candidate-filters{display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+/* Keep search and role controls readable below the multi-select tags. */
+.planner-only .candidate-filters{display:grid;grid-column:1/-1;grid-template-columns:minmax(0,1fr);gap:6px}
 .planner-only #candidate-search{grid-column:1/-1}
